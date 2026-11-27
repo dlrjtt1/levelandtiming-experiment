@@ -51,6 +51,9 @@
     if (ctx.state === "suspended") ctx.resume();
     return ctx;
   }
+  async function sysvol() {   // macOS output volume from the local lab server; null anywhere else
+    try { const r = await fetch("sysvol", { cache: "no-store" }); if (!r.ok) return null; const x = await r.json(); return typeof x.volume === "number" ? (x.muted ? 0 : x.volume) : null; } catch (e) { return null; }
+  }
   const url = (kind, file) => `${M.audioBase}/${kind}/${encodeURIComponent(file)}.${M.ext}`;
   function load(kind, file) {
     const k = kind + "/" + file;
@@ -184,16 +187,21 @@
       show(`<h1>${t("volH")}</h1>${t("vol")}${LAB ? `<p>${t("volLab")}</p>` : ""}<div class="row"><button id="pl">${t("play")}</button></div>
         <p><label>${t(LAB ? "volSetLab" : "volSetOnline")}<br><input type="text" id="vs" maxlength="40" value="${(S.session.volume_setting || "").replace(/"/g, "")}"></label></p>
         <div class="row"><button id="go" disabled>${t("volDone")}</button></div>`);
-      let t0 = 0, heard = 0, listened = false;
+      let t0 = 0, heard = 0, listened = false, typed = false, sys = null;
       const upd = () => { const b = $("#go"); if (b) b.disabled = !(listened && (!LAB || $("#vs").value.trim())); };
-      $("#vs").oninput = upd;
+      $("#vs").oninput = () => { typed = true; upd(); };
+      // lab on the Mac started by start_lab.command: the local server reports the macOS output volume (0-100); the field follows it until someone types
+      const poll = LAB ? setInterval(async () => {
+        if (!$("#vs")) { clearInterval(poll); return; }
+        sys = await sysvol(); if (sys !== null && !typed && $("#vs")) { $("#vs").value = "mac " + sys; upd(); }
+      }, 700) : 0;
       $("#pl").onclick = () => {
         if (cur) { stop(); return; }
         t0 = performance.now(); $("#pl").textContent = t("stop");
         play(buf, { loop: true, onstop: () => { heard += (performance.now() - t0) / 1000; const b = $("#pl"); if (b) b.textContent = t("play"); } });
         setTimeout(() => { listened = true; upd(); }, DEBUG ? 300 : 3000);
       };
-      $("#go").onclick = () => { S.session.volume_setting = $("#vs").value.trim(); stop(); S.session.volume_listen_s = Math.round(heard * 10) / 10; next(); };
+      $("#go").onclick = async () => { clearInterval(poll); S.session.volume_setting = $("#vs").value.trim(); if (LAB) S.session.volume_system = await sysvol(); stop(); S.session.volume_listen_s = Math.round(heard * 10) / 10; next(); };
     },
     instructions() { show(`<h1>${t("insH")}</h1>${t("ins")}<div class="row"><button id="go">${t("next")}</button></div>`); $("#go").onclick = next; },
     quiz() {
@@ -318,6 +326,7 @@
     async end() {
       window.onbeforeunload = null;
       show(`<h1>${t("endH")}</h1><p>${t("sending")}</p>`);
+      if (MODE === "lab" && S.session.volume_system_end === undefined) S.session.volume_system_end = await sysvol();   // differs from volume_system if the volume was changed during the session
       const ok = await send(true);
       S.done = true; save();
       show(`<h1>${t("endH")}</h1><p class="${ok ? "" : "warn"}">${t(ok ? "endOk" : "endFail")}</p><div class="row"><button class="${ok ? "ghost" : ""}" id="dl">${t("download")}</button></div>`);
