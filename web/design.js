@@ -12,7 +12,7 @@
     add({ type: "consent" });
     if (opt.mode === "online") add({ type: "headphones" });
     add({ type: "lrcheck" });
-    if (opt.mode === "online") add({ type: "volume" });
+    add({ type: "volume" });   // both modes: each listener sets a comfortable level, then keeps it
     add({ type: "instructions" });
     add({ type: "quiz" });
     add({ type: "practiceIntro" });

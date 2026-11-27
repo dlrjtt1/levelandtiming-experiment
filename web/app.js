@@ -180,15 +180,20 @@
     async volume() {
       await preload([["practice", design.volume]]);
       const buf = await load("practice", design.volume);
-      show(`<h1>${t("volH")}</h1>${t("vol")}<div class="row"><button id="pl">${t("play")}</button><button id="go" disabled>${t("volDone")}</button></div>`);
-      let t0 = 0, heard = 0;
+      const LAB = MODE === "lab";   // lab: the experimenter types the device setting (required); online: optional self-report
+      show(`<h1>${t("volH")}</h1>${t("vol")}${LAB ? `<p>${t("volLab")}</p>` : ""}<div class="row"><button id="pl">${t("play")}</button></div>
+        <p><label>${t(LAB ? "volSetLab" : "volSetOnline")}<br><input type="text" id="vs" maxlength="40" value="${(S.session.volume_setting || "").replace(/"/g, "")}"></label></p>
+        <div class="row"><button id="go" disabled>${t("volDone")}</button></div>`);
+      let t0 = 0, heard = 0, listened = false;
+      const upd = () => { const b = $("#go"); if (b) b.disabled = !(listened && (!LAB || $("#vs").value.trim())); };
+      $("#vs").oninput = upd;
       $("#pl").onclick = () => {
         if (cur) { stop(); return; }
         t0 = performance.now(); $("#pl").textContent = t("stop");
         play(buf, { loop: true, onstop: () => { heard += (performance.now() - t0) / 1000; const b = $("#pl"); if (b) b.textContent = t("play"); } });
-        setTimeout(() => { const b = $("#go"); if (b) b.disabled = false; }, DEBUG ? 300 : 3000);
+        setTimeout(() => { listened = true; upd(); }, DEBUG ? 300 : 3000);
       };
-      $("#go").onclick = () => { stop(); S.session.volume_listen_s = Math.round(heard * 10) / 10; next(); };
+      $("#go").onclick = () => { S.session.volume_setting = $("#vs").value.trim(); stop(); S.session.volume_listen_s = Math.round(heard * 10) / 10; next(); };
     },
     instructions() { show(`<h1>${t("insH")}</h1>${t("ins")}<div class="row"><button id="go">${t("next")}</button></div>`); $("#go").onclick = next; },
     quiz() {

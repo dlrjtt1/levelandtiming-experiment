@@ -11,8 +11,7 @@ def run(pw, mode, lang, shots):
     b = pw.chromium.launch(channel="chrome", args=["--autoplay-policy=no-user-gesture-required"]); p = b.new_page(viewport={"width": 1440, "height": 900})
     errs = []; p.on("pageerror", lambda e: errs.append(str(e))); posted = []
     if mode == "lab":
-        p.route("**/api/assign", lambda r: r.fulfill(json={"order": "RCL"}))
-        p.route("**/api/results", lambda r: (posted.append(json.loads(r.request.post_data)), r.fulfill(json={"ok": True})))
+        p.route("https://script.google.com/**", lambda r: (posted.append(json.loads(r.request.post_data)), r.fulfill(json={"ok": True, "stored": 0}, headers={"Access-Control-Allow-Origin": "*"})) if r.request.method == "POST" else r.fulfill(json={"order": "RCL"}, headers={"Access-Control-Allow-Origin": "*"}))
     p.goto(f"http://localhost:8765/?mode={mode}&debug=1&lang={lang}&audiobase=audio_test&ext=wav" + ("&order=LRC" if mode == "online" else ""))
     click = lambda s: p.click(s, timeout=20000)
     p.wait_for_selector("#ok"); p.check("#ok"); p.fill("#pid", "T01"); click("#go")
@@ -30,8 +29,9 @@ def run(pw, mode, lang, shots):
         if p.query_selector("#go"): break
         click("#pl"); click(random.choice(["#bl", "#br"])); p.wait_for_timeout(30)
     click("#go")
-    if mode == "online":
-        p.wait_for_selector("#pl"); ok(p.is_disabled("#go"), "volume: done disabled before listening"); click("#pl"); p.wait_for_timeout(600); click("#go")
+    p.wait_for_selector("#vs"); ok(p.is_disabled("#go"), "volume: done disabled before listening"); click("#pl"); p.wait_for_timeout(600)
+    if mode == "lab": ok(p.is_disabled("#go"), "lab volume: setting required"); p.fill("#vs", "knob 12 o'clock")
+    click("#go")
     p.wait_for_selector("table.grid"); 
     if shots: p.screenshot(path=f"/tmp/shot_{lang}_instructions.png", full_page=True)
     click("#go")
@@ -73,7 +73,7 @@ def run(pw, mode, lang, shots):
     ok(S["session"]["audio_sample_rate"] == 48000, "48 kHz context"); ok(S["session"]["post"]["hearing_problem"] == "no", "post answers stored")
     ok(all(S["session"].get("ref_played_" + s) == 1 for s in "LCR"), "reference played once per seat")
     if mode == "lab":
-        ok(S["session"]["seat_order"] == "RCL" and S["session"]["seat_order_source"] == "server", "lab: order from the server")
+        ok(S["session"]["volume_setting"] == "knob 12 o'clock", "lab: volume setting stored")
         got = [t["index"] for c in posted for t in c["trials"]]; ok(got == list(range(1, 13)), f"lab: every trial posted exactly once ({got})"); ok(posted[-1]["final"] and len(posted) == 4, "lab: 3 block posts + final")
         ok("headphone" not in S["session"], "lab: no headphone screen")
     else:

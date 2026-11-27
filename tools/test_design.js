@@ -28,7 +28,7 @@ for (let seed = 1; seed <= 600; seed++) {
   const k = tr[0].itdg + "/" + tr[0].lr; firstPos[k] = (firstPos[k] || 0) + 1;
 }
 const lab = D.buildSteps(design, "LCR", 7, { mode: "lab", repetitions: REPS }).map((s) => s.type);
-ok(!lab.includes("headphones") && !lab.includes("volume"), "lab mode skips headphone and volume screens");
+ok(!lab.includes("headphones") && lab.includes("volume"), "lab mode skips the headphone screen and keeps the volume screen");
 const dbg = D.buildSteps(design, "LCR", 7, { mode: "online", repetitions: REPS, trialsPerRep: 2 }).filter((s) => s.type === "trial" && !s.practice);
 ok(dbg.length === 12, "debug: 2 trials per repetition");
 const c = Object.values(firstPos); console.log("first-trial condition counts over 600 sessions: min", Math.min(...c), "max", Math.max(...c), "(expected about 40)");

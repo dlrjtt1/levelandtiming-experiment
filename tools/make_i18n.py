@@ -43,6 +43,9 @@ T = {
          "<p>これから聞く音の中で最も大きい音と同じ大きさの音楽が、繰り返し再生されます。</p><p><b>十分に大きく、かつ不快ではない大きさ</b>になるように、コンピューター（またはヘッドホン）の音量を調整してください。</p><p>調整した後は、実験が終わるまで<b>音量を変えないでください。</b>実験中に条件によって音の大きさが変わるのは、意図されたものです。</p>",
          "<p>Music as loud as the loudest sound in this experiment will play repeatedly.</p><p>Adjust the volume of your computer (or headphones) so that it is <b>clearly loud but not uncomfortable</b>.</p><p>After that, <b>do not change the volume</b> until the end of the experiment. Differences in loudness between sounds during the experiment are intended.</p>"),
  "volDone": ("볼륨을 맞췄습니다", "音量を調整しました", "I have set the volume"),
+ "volLab": ("음량은 실험자가 안내하는 장치로 조절해 주십시오. 맞춘 뒤 실험자에게 알려 주십시오.", "音量は実験者が案内する機器で調整してください。調整が終わったら実験者に知らせてください。", "Use the device the experimenter shows you to set the volume, then tell the experimenter."),
+ "volSetLab": ("음량 설정값 (실험자가 입력)", "音量の設定値（実験者が入力）", "Volume setting (entered by the experimenter)"),
+ "volSetOnline": ("맞춘 컴퓨터 음량 (선택, 예: 50 %)", "調整後のパソコンの音量（任意、例：50 %）", "Computer volume after setting (optional, e.g. 50 %)"),
 
  "insH": ("평가 방법", "評価の方法", "How to rate"),
  "ins": ("<p>각 소리를 들은 뒤 세 가지를 평가합니다. <b>평가하는 것은 소프라노의 노래(목소리)뿐입니다.</b> 오케스트라 반주는 판단에 넣지 마십시오. 답은 1~5 중에서 고릅니다.</p>"
