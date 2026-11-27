@@ -6,7 +6,7 @@
   const M = Object.assign({}, CFG[MODE]);
   if (Q.get("audiobase")) M.audioBase = Q.get("audiobase");
   if (Q.get("ext")) M.ext = Q.get("ext");
-  const MIN = DEBUG ? 1 : CFG.minListenS, KEY = "p2_session_" + MODE;
+  const MIN = DEBUG ? 1 : CFG.minListenS, KEY = "levelandtiming_session_" + MODE;
   const app = document.getElementById("app");
   let T = {}, design = null, S = null, steps = [], ctx = null, cur = null;
   const buffers = new Map();
@@ -129,7 +129,7 @@
   }
   function download() {
     const blob = new Blob([JSON.stringify({ session: S.session, trials: S.trials }, null, 1)], { type: "application/json" });
-    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `pilot2_${S.session.pid}_${S.session.session_id}.json`; a.click();
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `levelandtiming_${S.session.pid}_${S.session.session_id}.json`; a.click();
   }
 
   // ---------- screens ----------

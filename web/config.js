@@ -5,6 +5,6 @@ window.P2_CONFIG = {
   autoPlay: true,           // each sound starts by itself when its screen appears
   repetitions: { L: 1, C: 2, R: 1 },   // centre seat twice (retest reliability), side seats once -> 60 trials
   seatOrders: ["LCR", "LRC", "CLR", "CRL", "RLC", "RCL"],
-  online: { audioBase: "audio/online", ext: "flac", endpoint: "", assign: "" },   // endpoint: Google Apps Script URL (to be set)
+  online: { audioBase: "audio/online", ext: "flac", endpoint: "https://script.google.com/macros/s/AKfycbyA2QLlFxH6rIjjSIFl89rZnOf2Kkgt1ZkCcAGCMq-FGih8lQt9WZvRI0fUfOQqVx1a/exec", assign: "https://script.google.com/macros/s/AKfycbyA2QLlFxH6rIjjSIFl89rZnOf2Kkgt1ZkCcAGCMq-FGih8lQt9WZvRI0fUfOQqVx1a/exec?assign=1" },   // Google Apps Script web app (gas/Code.gs)
   lab:    { audioBase: "/audio",       ext: "wav",  endpoint: "/api/results", assign: "/api/assign" }  // served by the local Rust server
 };

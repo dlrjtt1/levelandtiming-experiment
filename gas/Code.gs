@@ -1,5 +1,5 @@
 /**
- * Receiver for the pilot 2 experiment page (Google Apps Script web app, bound to a Google Sheet).
+ * Receiver for the levelandtiming-experiment page (pilot 2) (Google Apps Script web app, bound to a Google Sheet).
  *   POST (text/plain, JSON {session, trials, first_index, final})  -> rows in the sheets "trials" and "sessions", raw copy in "raw"
  *   GET  ?assign=1                                                 -> {"order": "LCR"}: the seat order used least so far (balanced)
  * Set-up: gas/README.md.  No personal data is stored: the page sends a random participant code only.
@@ -53,7 +53,7 @@ function doGet(e) {
       return out_({ order: order });
     } finally { lock.releaseLock(); }
   }
-  return out_({ ok: true, service: "pilot2 receiver" });
+  return out_({ ok: true, service: "levelandtiming-experiment receiver" });
 }
 
 function out_(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }

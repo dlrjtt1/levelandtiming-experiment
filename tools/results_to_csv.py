@@ -1,4 +1,4 @@
-"""Turn downloaded result files (pilot2_*.json) into two CSV tables.
+"""Turn downloaded result files (levelandtiming_*.json) into two CSV tables.
 usage: python tools/results_to_csv.py results/*.json   -> sessions.csv, trials.csv in the current folder"""
 import csv, json, sys
 ses, tri = [], []
