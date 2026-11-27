@@ -1,13 +1,17 @@
-# 2ndpilot-experiment
+# levelandtiming-experiment
 
 Listening-experiment page for the second pilot (BRAS CR3 hall model, AuralPaths stimuli): effects of the time and level
 differences between the direct sound and the PA-reinforced sound on localisation, timbre and image stability, at three seats.
 
-Status (2026-11-25, draft complete for online runs): the page (`web/`) works from start to end and is covered by tests; seat pictures
-from Unreal Engine (MetaHuman performers) are in `web/img/`; the receiver is in `gas/` (set-up in `gas/README.md`, not yet deployed or
-tested against Google). To do before data collection: put the online audio in `web/audio/online/{main,practice}/` (FLAC, on the
-experimenter's computer: `stimuli/web_audio_online/`), deploy the receiver and enter its URL in `web/config.js`, final consent text,
-native check of the Japanese texts. Not made: local Rust server for the lab runs (`server/`).
+Status (2026-11-27): the page (`web/`, version pilot2-0.4) works from start to end; ten complete simulated runs with the real stimuli
+passed (`tools/sim_run.py`). Seat pictures from Unreal Engine (MetaHuman performers, 3840×2160) are in `web/img/`. The receiver is in
+`gas/` (set-up in `gas/README.md`, not yet deployed). Not in the repository: the stimulus audio (`web/audio/`, waiting for permission
+from Aalto to host files derived from their recordings) and the source recordings (`mozart_mp3/`). To do before data collection:
+deploy the receiver and enter its URL in `web/config.js`, final consent text, native check of the Japanese texts. Not made: local Rust
+server for the lab runs (`server/`).
+
+Local preview: put the FLAC files in `web/audio/online/{main,practice}/`, then double-click `start_preview.command` (macOS; serves
+`web/` at http://localhost:8000/?mode=online). Add `&debug=1` for a short run with two trials per block.
 
 ## Layout
 - `web/` static page. `config.js` settings, `design.js` presentation order, `app.js` screens/playback/recording,
