@@ -56,7 +56,7 @@
     const k = kind + "/" + file;
     if (!buffers.has(k)) {
       const p = fetch(url(kind, file)).then((r) => { if (!r.ok) throw new Error(r.status + " " + url(kind, file)); return r.arrayBuffer(); })
-        .then((b) => new Promise((res, rej) => ac().decodeAudioData(b, res, rej)));
+        .then((b) => new Promise((res, rej) => ac().decodeAudioData(b, res, () => rej(new Error("decode " + url(kind, file))))));
       buffers.set(k, p); p.catch(() => buffers.delete(k));
     }
     return buffers.get(k);
@@ -70,7 +70,7 @@
         return;
       } catch (e) {
         console.error(e);
-        show(`<p class="warn">${t("loadError")}</p><div class="row"><button id="re">${t("retry")}</button></div>`);
+        show(`<p class="warn">${t("loadError")}</p><p class="small" style="opacity:.6">${String(e && e.message || e).replace(/[<>&]/g, "")}</p><div class="row"><button id="re">${t("retry")}</button></div>`);
         await new Promise((r) => { $("#re").onclick = r; });
       }
     }
