@@ -330,7 +330,7 @@
   const build = () => window.P2Design.buildSteps(design, S.session.seat_order, S.session.seed, { mode: MODE, repetitions: CFG.repetitions, trialsPerRep: DEBUG ? 2 : 0 });
   async function assignOrder() {
     const o = Q.get("order"); if (o && CFG.seatOrders.includes(o)) return [o, "url"];
-    if (M.assign) { try { const x = await (await fetch(M.assign, { cache: "no-store" })).json(); if (CFG.seatOrders.includes(x.order)) return [x.order, "server"]; } catch (e) { /* fall through */ } }
+    if (M.assign && !DEBUG) { try { const x = await (await fetch(M.assign, { cache: "no-store" })).json(); if (CFG.seatOrders.includes(x.order)) return [x.order, "server"]; } catch (e) { /* fall through */ } }
     return [CFG.seatOrders[Math.floor(Math.random() * CFG.seatOrders.length)], "random"];
   }
   async function fresh(lang) {
