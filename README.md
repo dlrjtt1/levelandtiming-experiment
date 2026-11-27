@@ -5,8 +5,8 @@ differences between the direct sound and the PA-reinforced sound on localisation
 
 Status (2026-11-27): the page (`web/`, version pilot2-0.4) works from start to end; ten complete simulated runs with the real stimuli
 passed (`tools/sim_run.py`). Seat pictures from Unreal Engine (MetaHuman performers, 3840×2160) are in `web/img/`. The receiver is in
-`gas/` (set-up in `gas/README.md`, not yet deployed). Not in the repository: the stimulus audio (`web/audio/`, waiting for permission
-from Aalto to host files derived from their recordings) and the source recordings (`mozart_mp3/`). To do before data collection:
+`gas/` (set-up in `gas/README.md`, not yet deployed). The stimulus audio is in `web/audio/` (online set and HD600 lab set, FLAC; hosted with permission from
+Prof. Tapio Lokki, Aalto University, e-mail of 2026-11-27). Not in the repository: the source recordings (`mozart_mp3/`). To do before data collection:
 deploy the receiver and enter its URL in `web/config.js`, final consent text, native check of the Japanese texts. Not made: local Rust
 server for the lab runs (`server/`, no longer needed: lab mode uses the same static page and receiver).
 
@@ -32,7 +32,7 @@ sheet keeps the two apart in the column `mode`, and seat orders are balanced sep
 
 ## Audio
 `<audioBase>/main/<file>.<ext>` (45 conditions + 3 references) and `<audioBase>/practice/<file>.<ext>` (4 practice + 1 volume file).
-Online: `web/audio/online/…flac` (set without headphone EQ). Lab: `/audio/…wav` from the local server (HD600 set).
+Online: `web/audio/online/…flac` (set without headphone EQ). Lab: `web/audio/lab/…flac` (HD600 set, 24 bit). Checksums: `web/audio/MD5SUMS.txt`.
 For a local try-out: put or link the WAV folders as `web/audio_test/main` and `web/audio_test/practice`, run
 `python -m http.server --directory web 8000`, open `http://localhost:8000/?debug=1&audiobase=audio_test&ext=wav`.
 
@@ -69,3 +69,5 @@ check the licence of the photographs and credit them on the page before the onli
 People in the seat pictures: MetaHuman (Epic Games; pictures rendered in Unreal Engine 5.8). Lower side walls (wainscot), extra seats, instruments and clothing are reconstructions (`render/side_fix.py`, `render/instruments_v3.py`, UE scripts in the experimenter's `UE_CR3_pilot2/` folder).
 Avatars and poses of the earlier Blender pictures: Microsoft Rocketbox (Gonzalez-Franco et al. 2020, doi:10.3389/frvir.2020.561558, MIT licence).
 Music: Aalto anechoic recordings (Pätynen, Pulkki & Lokki 2008, doi:10.3813/AAA.918104), free for academic research.
+The stimuli in `web/audio/` are derived from these recordings and are published here for this listening test with the permission of
+Prof. Tapio Lokki (2026-11-27). They are not covered by the licence of the code; ask Aalto before reusing them elsewhere.

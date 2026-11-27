@@ -1,5 +1,4 @@
 web/audio_test
-web/audio/
 # source recordings (Aalto anechoic recordings, academic use; not redistributed)
 mozart_mp3/
 server/target/
