@@ -136,7 +136,7 @@
   const next = () => { stop(); S.idx++; save(); run(); };
   const screens = {
     consent() {
-      const pid = S.session.pid || Q.get("pid") || (MODE === "online" ? "W" + S.session.session_id.slice(0, 6).toUpperCase() : "");
+      const pid = S.session.pid || Q.get("pid") || (MODE === "online" ? "W" : "L") + S.session.session_id.slice(0, 6).toUpperCase();   // W = online, L = lab; can be overwritten
       show(`<h1>${t("introH")}</h1>${t("intro")}${t("consent")}
         <label class="check"><input type="checkbox" id="ok"><span>${t("consentCheck")}</span></label>
         <p><label>${t("pid")}<br><input type="text" id="pid" value="${pid}" maxlength="40"></label></p>
