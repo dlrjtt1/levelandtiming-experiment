@@ -8,10 +8,16 @@ passed (`tools/sim_run.py`). Seat pictures from Unreal Engine (MetaHuman perform
 `gas/` (set-up in `gas/README.md`, not yet deployed). Not in the repository: the stimulus audio (`web/audio/`, waiting for permission
 from Aalto to host files derived from their recordings) and the source recordings (`mozart_mp3/`). To do before data collection:
 deploy the receiver and enter its URL in `web/config.js`, final consent text, native check of the Japanese texts. Not made: local Rust
-server for the lab runs (`server/`).
+server for the lab runs (`server/`, no longer needed: lab mode uses the same static page and receiver).
 
 Local preview: put the FLAC files in `web/audio/online/{main,practice}/`, then double-click `start_preview.command` (macOS; serves
-`web/` at http://localhost:8000/?mode=online). Add `&debug=1` for a short run with two trials per block.
+`web/` at http://localhost:8000/?mode=online). Add `&debug=1` for a short run with two trials per block (it does not use up a seat
+order from the balanced assignment).
+
+Face-to-face runs (lab mode): put the HD600 set (FLAC 24 bit copies of `pilot2s_lab_HD600` and `pilot2s_practice_lab_HD600`) in
+`web/audio/lab/{main,practice}/` and double-click `start_lab.command` (http://localhost:8000/?mode=lab). Lab mode skips the
+headphone and volume screens (the experimenter fixes headphones and level) and sends to the same receiver as the online runs; the
+sheet keeps the two apart in the column `mode`, and seat orders are balanced separately for each mode.
 
 ## Layout
 - `web/` static page. `config.js` settings, `design.js` presentation order, `app.js` screens/playback/recording,

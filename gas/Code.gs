@@ -1,7 +1,8 @@
 /**
  * Receiver for the levelandtiming-experiment page (pilot 2) (Google Apps Script web app, bound to a Google Sheet).
  *   POST (text/plain, JSON {session, trials, first_index, final})  -> rows in the sheets "trials" and "sessions", raw copy in "raw"
- *   GET  ?assign=1                                                 -> {"order": "LCR"}: the seat order used least so far (balanced)
+ *   GET  ?assign=1&mode=online|lab                                 -> {"order": "LCR"}: the seat order used least so far in that mode (balanced
+ *                                                                      separately for online and lab, which are analysed separately)
  * Set-up: gas/README.md.  No personal data is stored: the page sends a random participant code only.
  */
 var ORDERS = ["LCR", "LRC", "CLR", "CRL", "RLC", "RCL"];
@@ -42,14 +43,15 @@ function doGet(e) {
   if (e && e.parameter && e.parameter.assign) {
     var lock = LockService.getScriptLock(); lock.waitLock(20000);
     try {
-      var sh = sheet_("assign", ["given", "order"]), n = {};
+      var mode = e.parameter.mode === "lab" ? "lab" : "online";
+      var sh = sheet_("assign", ["given", "order", "mode"]), n = {};
       ORDERS.forEach(function (o) { n[o] = 0; });
-      var v = sh.getLastRow() > 1 ? sh.getRange(2, 2, sh.getLastRow() - 1, 1).getValues() : [];
-      v.forEach(function (r) { if (n[r[0]] !== undefined) n[r[0]]++; });
+      var v = sh.getLastRow() > 1 ? sh.getRange(2, 2, sh.getLastRow() - 1, 2).getValues() : [];
+      v.forEach(function (r) { if (n[r[0]] !== undefined && (r[1] || "online") === mode) n[r[0]]++; });
       var min = Math.min.apply(null, ORDERS.map(function (o) { return n[o]; }));
       var pool = ORDERS.filter(function (o) { return n[o] === min; });
       var order = pool[Math.floor(Math.random() * pool.length)];
-      sh.appendRow([new Date(), order]);
+      sh.appendRow([new Date(), order, mode]);
       return out_({ order: order });
     } finally { lock.releaseLock(); }
   }
