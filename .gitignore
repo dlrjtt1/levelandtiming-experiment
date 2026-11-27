@@ -1,0 +1,15 @@
+web/audio_test
+web/audio/
+server/target/
+results/
+*.DS_Store
+# render inputs and outputs (see README: Seat pictures)
+render/microsoft-rocketbox/
+render/CR3_360panorama.jpg
+render/pano12k.jpg
+render/pano12k_level.jpg
+render/parquet.jpg
+render/*.blend
+render/out/
+render/*.png
+render/ue/*.png

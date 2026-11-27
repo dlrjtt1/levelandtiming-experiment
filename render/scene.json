@@ -1,0 +1,134 @@
+{
+ "note": "Positions from the AuralPaths config of pilot 2. PA and performer positions are assumed (CR3 has no PA).",
+ "up_axis": "y",
+ "listener_view": [
+  -1,
+  0,
+  0
+ ],
+ "singer": [
+  -4,
+  0,
+  2.6
+ ],
+ "pa": [
+  [
+   -2,
+   -5,
+   3
+  ],
+  [
+   -2,
+   5,
+   3
+  ]
+ ],
+ "players": [
+  {
+   "pos": [
+    -4.43,
+    -1.79,
+    2.0
+   ],
+   "part": "Violin I"
+  },
+  {
+   "pos": [
+    -5.52,
+    -1.46,
+    2.0
+   ],
+   "part": "Violin II"
+  },
+  {
+   "pos": [
+    -5.49,
+    0.98,
+    2.0
+   ],
+   "part": "Viola"
+  },
+  {
+   "pos": [
+    -4.48,
+    1.39,
+    2.0
+   ],
+   "part": "Cello"
+  },
+  {
+   "pos": [
+    -6.01,
+    2.37,
+    2.0
+   ],
+   "part": "Contrabass"
+  },
+  {
+   "pos": [
+    -5.64,
+    -0.62,
+    2.2
+   ],
+   "part": "Flute"
+  },
+  {
+   "pos": [
+    -6.42,
+    -0.64,
+    2.2
+   ],
+   "part": "Clarinet"
+  },
+  {
+   "pos": [
+    -6.44,
+    0.16,
+    2.2
+   ],
+   "part": "Bassoon"
+  },
+  {
+   "pos": [
+    -6.45,
+    -1.39,
+    2.0
+   ],
+   "part": "Horn 1"
+  },
+  {
+   "pos": [
+    -6.45,
+    -2.2,
+    2.0
+   ],
+   "part": "Horn 2"
+  }
+ ],
+ "seats": {
+  "L": [
+   7.84,
+   -4,
+   1.23
+  ],
+  "C": [
+   7.84,
+   0,
+   1.23
+  ],
+  "R": [
+   7.84,
+   4,
+   1.23
+  ]
+ },
+ "pano": {
+  "file": "CR3_360panorama.jpg",
+  "pos": [
+   7.7,
+   0.0,
+   1.7
+  ],
+  "yaw_deg": 0.0
+ }
+}

@@ -1,0 +1,15 @@
+name,what,posture,config_x_m,config_y_m,floor_z_m,source_or_ear_z_m,UE_X_cm,UE_Y_cm,UE_Z_floor_cm,UE_Z_source_or_ear_cm,UE_yaw_deg
+Singer,"soprano (amplified source, path A)",standing,-4,0,1.0,2.6,-400.0,0.0,100.0,260.0,0.0
+ViolinI,Violin I,seated,-4.43,-1.79,1.0,2.0,-443.0,179.0,100.0,200.0,-12.0
+ViolinII,Violin II,seated,-5.52,-1.46,1.0,2.0,-552.0,146.0,100.0,200.0,-8.7
+Viola,Viola,seated,-5.49,0.98,1.0,2.0,-549.0,-98.0,100.0,200.0,5.9
+Cello,Cello,seated,-4.48,1.39,1.0,2.0,-448.0,-139.0,100.0,200.0,9.3
+Contrabass,Contrabass,standing,-6.01,2.37,1.0,2.0,-601.0,-237.0,100.0,200.0,13.3
+Flute,Flute,seated,-5.64,-0.62,1.0,2.2,-564.0,62.0,100.0,220.0,-3.7
+Clarinet,Clarinet,seated,-6.42,-0.64,1.0,2.2,-642.0,64.0,100.0,220.0,-3.5
+Bassoon,Bassoon,seated,-6.44,0.16,1.0,2.2,-644.0,-16.0,100.0,220.0,0.9
+Horn1,Horn 1,seated,-6.45,-1.39,1.0,2.0,-645.0,139.0,100.0,200.0,-7.6
+Horn2,Horn 2,seated,-6.45,-2.2,1.0,2.0,-645.0,220.0,100.0,200.0,-11.9
+SeatCam_L,"camera, ear position of seat L",-,7.84,-4,0.0,1.23,784.0,400.0,0.0,123.0,-180.0
+SeatCam_C,"camera, ear position of seat C",-,7.84,0,0.0,1.23,784.0,0.0,0.0,123.0,-180.0
+SeatCam_R,"camera, ear position of seat R",-,7.84,4,0.0,1.23,784.0,-400.0,0.0,123.0,-180.0
