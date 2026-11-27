@@ -9,7 +9,6 @@ window.P2_CONFIG = {
     experimenter: "",       // the only contact address shown, e.g. "柳 東均（東京藝術大学 研究生） name@example.com"
     pi: "",                 // research supervisor (研究責任者): name and title only, no e-mail (questions go to the experimenter)
     deadline: "",           // last day to withdraw consent, e.g. "2027年3月31日"
-    retention: "",          // how long data are kept, e.g. "論文発表後10年間"
     approval: ""            // approval number of the ethics review
   },
   online: { audioBase: "audio/online", ext: "flac", endpoint: "https://script.google.com/macros/s/AKfycbyA2QLlFxH6rIjjSIFl89rZnOf2Kkgt1ZkCcAGCMq-FGih8lQt9WZvRI0fUfOQqVx1a/exec", assign: "https://script.google.com/macros/s/AKfycbyA2QLlFxH6rIjjSIFl89rZnOf2Kkgt1ZkCcAGCMq-FGih8lQt9WZvRI0fUfOQqVx1a/exec?assign=1&mode=online" },   // Google Apps Script web app (gas/Code.gs)

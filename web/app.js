@@ -137,7 +137,7 @@
 
   function ethicsVals() {   // contact details, deadline etc. come from config.js (P2_CONFIG.ethics); unset ones show as [TBD]
     const E = CFG.ethics || {}, o = {};
-    ["experimenter", "pi", "deadline", "retention", "approval"].forEach((k) => { o[k] = E[k] ? String(E[k]).replace(/[<>&"]/g, "") : "[TBD]"; });
+    ["experimenter", "pi", "deadline", "approval"].forEach((k) => { o[k] = E[k] ? String(E[k]).replace(/[<>&"]/g, "") : "[TBD]"; });
     return o;
   }
   // ---------- screens ----------

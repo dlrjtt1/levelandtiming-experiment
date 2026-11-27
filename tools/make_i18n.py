@@ -19,9 +19,9 @@ T = {
  "consent": ("<p><b>참여 동의</b></p><ul>"
              "<li><b>참여는 자유입니다.</b> 참여하지 않거나 도중에 그만두어도 불이익은 없습니다. 도쿄예술대학 학생의 성적 등에도 영향을 주지 않습니다.</li>"
              "<li><b>참여할 수 있는 분:</b> 만 18세 이상이며, 청력에 자각하는 이상이 없는 분.</li>"
-             "<li><b>부담과 배려:</b> 오래 들으면 피로할 수 있습니다. 음량은 처음에 직접 '충분히 크지만 불편하지 않은' 크기로 맞춥니다. 불편하면 바로 그만두십시오.</li>"
+             "<li><b>부담과 배려:</b> 오래 들으면 피로할 수 있습니다. 음량은 처음에 작게 시작해 조금씩 올리며, 직접 '충분히 크지만 불편하지 않은' 크기로 맞춥니다. 불편하면 바로 그만두십시오.</li>"
              "<li><b>기록하는 정보:</b> 평가 응답, 듣는 데 걸린 시간, 헤드폰 기종, 음량 설정값, 브라우저 종류와 화면 크기, 마지막 질문의 응답(청력 이상의 자각 여부, 음악·음향 경력 연수 포함). 이름·연락처·IP 주소는 기록하지 않으며, 응답은 무작위 참가자 코드로만 관리합니다.</li>"
-             "<li><b>데이터 취급:</b> 응답은 실시자가 관리하는 클라우드 표(Google 스프레드시트)에 저장되며 이 연구 목적으로만 사용합니다. {retention} 보관한 뒤 삭제합니다.</li>"
+             "<li><b>데이터 취급:</b> 응답은 실시자가 관리하는 클라우드 표(Google 스프레드시트)에 저장되며 이 연구 목적으로만 사용합니다. 학교 규정에 따라 10년간 보관한 뒤 삭제합니다.</li>"
              "<li><b>결과 공표:</b> 학회 발표나 논문에 통계 처리한 형태로만 싣습니다. 개인이 특정되지 않습니다.</li>"
              "<li><b>동의 철회:</b> 참여 후에도 {deadline}까지 철회할 수 있습니다. 종료 화면에 나오는 참가자 코드를 적어 두었다가 아래 연락처로 알려 주십시오. 코드가 없으면 어떤 응답인지 찾을 수 없습니다.</li>"
              "<li><b>사례:</b> 대면으로 참여한 분께는 과자 등을 드립니다. 온라인 참여의 사례는 없습니다.</li>"
@@ -30,9 +30,9 @@ T = {
              "<p><b>参加への同意</b></p><ul>"
              "<li><b>参加は自由です。</b>参加しないこと、途中でやめることによる不利益は一切ありません。東京藝術大学の学生の方の成績等にも影響しません。</li>"
              "<li><b>参加できる方：</b>18歳以上で、聴力に自覚的な異常のない方。</li>"
-             "<li><b>負担と配慮：</b>長い聴取で疲れることがあります。音量は最初にご自身で「十分に大きく、かつ不快ではない」大きさに合わせてください。不快に感じたら、すぐに中止してください。</li>"
+             "<li><b>負担と配慮：</b>長い聴取で疲れることがあります。音量は最初に小さめから少しずつ上げ、ご自身で「十分に大きく、かつ不快ではない」大きさに合わせてください。不快に感じたら、すぐに中止してください。</li>"
              "<li><b>記録する情報：</b>評価の回答、聴取にかかった時間、ヘッドホンの機種、音量の設定値、ブラウザーの種類と画面サイズ、最後の質問への回答（聴覚の自覚的な異常の有無、音楽・音響の経験年数を含む）。氏名・連絡先・IPアドレスは記録しません。回答は無作為の参加者コードで管理します。</li>"
-             "<li><b>データの扱い：</b>回答は実施者が管理するクラウド上の表（Googleスプレッドシート）に保存し、本研究の目的にのみ使います。{retention}保管したのち削除します。</li>"
+             "<li><b>データの扱い：</b>回答は実施者が管理するクラウド上の表（Googleスプレッドシート）に保存し、本研究の目的にのみ使います。本学の規則に従い10年間保管したのち削除します。</li>"
              "<li><b>結果の公表：</b>学会発表や論文で、統計処理した形でのみ公表します。個人が特定されることはありません。</li>"
              "<li><b>同意の撤回：</b>参加後も{deadline}までは同意を取り消せます。終了画面に表示される参加者コードを控え、下記の連絡先にお知らせください。コードがないと、どの回答かを特定できません。</li>"
              "<li><b>謝礼：</b>対面で参加された方には、謝礼として菓子等をお渡しします。オンライン参加の謝礼はありません。</li>"
@@ -41,9 +41,9 @@ T = {
              "<p><b>Consent</b></p><ul>"
              "<li><b>Taking part is voluntary.</b> Not taking part, or stopping part-way, has no disadvantage for you, and does not affect the grades of Tokyo University of the Arts students.</li>"
              "<li><b>Who can take part:</b> people aged 18 or over with no known hearing problem.</li>"
-             "<li><b>Burden and care:</b> long listening can be tiring. At the start you set the volume yourself to a level that is clearly loud but not uncomfortable. Stop at once if anything feels uncomfortable.</li>"
+             "<li><b>Burden and care:</b> long listening can be tiring. At the start you raise the volume gradually from low and set it yourself to a level that is clearly loud but not uncomfortable. Stop at once if anything feels uncomfortable.</li>"
              "<li><b>What is recorded:</b> your ratings, listening times, headphone model, volume setting, browser type and screen size, and your answers to the final questions (including whether you notice any hearing problem and your years of experience in music or audio). Your name, contact details and IP address are not recorded; answers are kept under a random participant code.</li>"
-             "<li><b>Data handling:</b> answers are stored in a cloud table (Google Sheets) managed by the experimenter and used for this research only. They are kept for {retention} and then deleted.</li>"
+             "<li><b>Data handling:</b> answers are stored in a cloud table (Google Sheets) managed by the experimenter and used for this research only. They are kept for 10 years under university rules and then deleted.</li>"
              "<li><b>Publication:</b> results appear in presentations and papers in statistical form only. You cannot be identified.</li>"
              "<li><b>Withdrawing consent:</b> you can withdraw until {deadline}. Note the participant code shown on the last screen and send it to the contact below. Without the code your answers cannot be found.</li>"
              "<li><b>Thanks:</b> people who take part in person receive snacks or similar. There is no reward for taking part online.</li>"
@@ -70,9 +70,9 @@ T = {
  "lrOk": ("확인되었습니다.", "確認できました。", "Confirmed."),
 
  "volH": ("음량 맞추기", "音量の調整", "Volume setting"),
- "vol": ("<p>이제부터 들을 소리 가운데 가장 큰 소리와 같은 크기의 음악이 반복해서 재생됩니다.</p><p><b>충분히 크지만 불편하지 않은 크기</b>가 되도록 컴퓨터(또는 헤드폰)의 볼륨을 맞춰 주십시오.</p><p>맞춘 뒤에는 실험이 끝날 때까지 <b>볼륨을 바꾸지 마십시오.</b> 실험 중 소리의 크기가 조건마다 달라지는 것은 의도된 것입니다.</p>",
-         "<p>これから聞く音の中で最も大きい音と同じ大きさの音楽が、繰り返し再生されます。</p><p><b>十分に大きく、かつ不快ではない大きさ</b>になるように、コンピューター（またはヘッドホン）の音量を調整してください。</p><p>調整した後は、実験が終わるまで<b>音量を変えないでください。</b>実験中に条件によって音の大きさが変わるのは、意図されたものです。</p>",
-         "<p>Music as loud as the loudest sound in this experiment will play repeatedly.</p><p>Adjust the volume of your computer (or headphones) so that it is <b>clearly loud but not uncomfortable</b>.</p><p>After that, <b>do not change the volume</b> until the end of the experiment. Differences in loudness between sounds during the experiment are intended.</p>"),
+ "vol": ("<p>이제부터 들을 소리 가운데 가장 큰 소리와 같은 크기의 음악이 반복해서 재생됩니다.</p><p>먼저 음량을 작게 한 뒤 조금씩 올려, <b>충분히 크지만 불편하지 않은 크기</b>가 되도록 컴퓨터(또는 헤드폰)의 볼륨을 맞춰 주십시오.</p><p>맞춘 뒤에는 실험이 끝날 때까지 <b>볼륨을 바꾸지 마십시오.</b> 실험 중 소리의 크기가 조건마다 달라지는 것은 의도된 것입니다.</p>",
+         "<p>これから聞く音の中で最も大きい音と同じ大きさの音楽が、繰り返し再生されます。</p><p>まず音量を小さめにしてから少しずつ上げ、<b>十分に大きく、かつ不快ではない大きさ</b>になるように、コンピューター（またはヘッドホン）の音量を調整してください。</p><p>調整した後は、実験が終わるまで<b>音量を変えないでください。</b>実験中に条件によって音の大きさが変わるのは、意図されたものです。</p>",
+         "<p>Music as loud as the loudest sound in this experiment will play repeatedly.</p><p>Start with the volume low and raise it gradually. Adjust the volume of your computer (or headphones) so that it is <b>clearly loud but not uncomfortable</b>.</p><p>After that, <b>do not change the volume</b> until the end of the experiment. Differences in loudness between sounds during the experiment are intended.</p>"),
  "volDone": ("볼륨을 맞췄습니다", "音量を調整しました", "I have set the volume"),
  "volLab": ("음량은 실험자가 안내하는 장치로 조절해 주십시오. 맞춘 뒤 실험자에게 알려 주십시오.", "音量は実験者が案内する機器で調整してください。調整が終わったら実験者に知らせてください。", "Use the device the experimenter shows you to set the volume, then tell the experimenter."),
  "volSetLab": ("음량 설정값 (맥 음량은 자동 입력, 다른 장치로 조절하면 실험자가 입력)", "音量の設定値（Macの音量は自動入力、他の機器で調整する場合は実験者が入力）", "Volume setting (Mac volume is filled in automatically; the experimenter types it if another device is used)"),
