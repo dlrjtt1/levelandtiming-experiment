@@ -30,7 +30,7 @@ with sync_playwright() as pw:
     p.goto(f"http://localhost:{port}/?mode=online&lang=ko&order={order}")
     click = lambda s: p.click(s, timeout=60000)
     cur = lambda: p.evaluate("(() => { const s = window.__p2.steps()[window.__p2.state().idx]; return s; })()")
-    p.wait_for_selector("#ok"); mark("consent"); p.check("#ok"); p.fill("#pid", pid); click("#go")
+    p.wait_for_selector("#ok"); mark("consent"); p.check("#age"); p.check("#ok"); p.fill("#pid", pid); click("#go")
     p.wait_for_selector("#hp"); mark("headphones"); p.fill("#hp", "sim headphones"); p.check("#ok"); click("#go")
     p.wait_for_selector("#bl"); mark("lrcheck")
     for _ in range(60):

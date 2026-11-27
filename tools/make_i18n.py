@@ -16,10 +16,41 @@ T = {
  "intro": ("<p>이 실험에서는 콘서트홀 객석에 앉아 공연을 듣는 상황을 헤드폰으로 재현합니다. 무대 위에서 소프라노가 오케스트라와 함께 노래하고, 소프라노의 목소리는 무대 양옆 스피커(PA)로 보강됩니다.</p><p>여러분은 객석의 세 자리(왼쪽·가운데·오른쪽)에 차례로 앉아, 소프라노의 노래가 어떻게 들리는지 평가합니다.</p><p>소요 시간은 약 30분이며, 중간에 휴식이 있습니다.</p>",
            "<p>この実験では、コンサートホールの客席に座って公演を聴く状況をヘッドホンで再現します。舞台上ではソプラノ歌手がオーケストラと共に歌い、ソプラノの声は舞台の両脇のスピーカー（PA）で補強されています。</p><p>皆さんは客席の3つの席（左・中央・右）に順番に座り、ソプラノの歌声がどのように聞こえるかを評価します。</p><p>所要時間は約30分で、途中に休憩があります。</p>",
            "<p>In this experiment, headphones recreate listening to a performance from a seat in a concert hall. On stage, a soprano sings with an orchestra, and the soprano's voice is reinforced through loudspeakers (PA) on both sides of the stage.</p><p>You will sit in three seats in the audience (left, centre, right) in turn and rate how the soprano's singing sounds.</p><p>The experiment takes about 30 minutes, with breaks.</p>"),
- "consent": ("<p><b>참여 동의</b></p><ul><li>참여는 자유이며, 언제든지 그만둘 수 있습니다. 그만두어도 불이익은 없습니다.</li><li>이름 등 개인을 알 수 있는 정보는 수집하지 않습니다. 응답은 참가자 코드로만 기록됩니다.</li><li>기록되는 내용: 평가 응답, 듣는 데 걸린 시간, 헤드폰 기종, 브라우저 종류.</li><li>결과는 연구 목적으로만 사용되며, 학회 발표나 논문에는 통계 처리된 형태로 실립니다.</li></ul>",
-             "<p><b>参加への同意</b></p><ul><li>参加は自由で、いつでも中止できます。中止しても不利益はありません。</li><li>氏名など個人を特定できる情報は収集しません。回答は参加者コードのみで記録されます。</li><li>記録される内容：評価の回答、聴取にかかった時間、ヘッドホンの機種、ブラウザーの種類。</li><li>結果は研究目的にのみ使用され、学会発表や論文には統計処理した形で掲載されます。</li></ul>",
-             "<p><b>Consent</b></p><ul><li>Taking part is voluntary and you may stop at any time, without any disadvantage.</li><li>No information that identifies you, such as your name, is collected. Answers are stored under a participant code only.</li><li>What is recorded: your ratings, listening times, headphone model and browser type.</li><li>The results are used for research only and appear in presentations and papers in statistical form.</li></ul>"),
- "consentCheck": ("위 내용을 읽었으며, 참여에 동의합니다.", "上記の内容を読み、参加に同意します。", "I have read the above and agree to take part."),
+ "consent": ("<p><b>참여 동의</b></p><ul>"
+             "<li><b>참여는 자유입니다.</b> 참여하지 않거나 도중에 그만두어도 불이익은 없습니다. 도쿄예술대학 학생의 성적 등에도 영향을 주지 않습니다.</li>"
+             "<li><b>참여할 수 있는 분:</b> 만 18세 이상이며, 청력에 자각하는 이상이 없는 분.</li>"
+             "<li><b>부담과 배려:</b> 오래 들으면 피로할 수 있습니다. 음량은 처음에 직접 '충분히 크지만 불편하지 않은' 크기로 맞춥니다. 불편하면 바로 그만두십시오.</li>"
+             "<li><b>기록하는 정보:</b> 평가 응답, 듣는 데 걸린 시간, 헤드폰 기종, 음량 설정값, 브라우저 종류와 화면 크기, 마지막 질문의 응답(청력 이상의 자각 여부, 음악·음향 경력 연수 포함). 이름·연락처·IP 주소는 기록하지 않으며, 응답은 무작위 참가자 코드로만 관리합니다.</li>"
+             "<li><b>데이터 취급:</b> 응답은 실시자가 관리하는 클라우드 표(Google 스프레드시트)에 저장되며 이 연구 목적으로만 사용합니다. {retention} 보관한 뒤 삭제합니다.</li>"
+             "<li><b>결과 공표:</b> 학회 발표나 논문에 통계 처리한 형태로만 싣습니다. 개인이 특정되지 않습니다.</li>"
+             "<li><b>동의 철회:</b> 참여 후에도 {deadline}까지 철회할 수 있습니다. 종료 화면에 나오는 참가자 코드를 적어 두었다가 아래 연락처로 알려 주십시오. 코드가 없으면 어떤 응답인지 찾을 수 없습니다.</li>"
+             "<li><b>사례:</b> 대면으로 참여한 분께는 과자 등을 드립니다. 온라인 참여의 사례는 없습니다.</li>"
+             "<li><b>심사:</b> 이 연구는 도쿄예술대학 연구윤리심사의 승인을 받았습니다(승인 번호 {approval}).</li></ul>"
+             "<p><b>문의처</b><br>연구 실시자: {experimenter}<br>연구 책임자: {pi}</p>",
+             "<p><b>参加への同意</b></p><ul>"
+             "<li><b>参加は自由です。</b>参加しないこと、途中でやめることによる不利益は一切ありません。東京藝術大学の学生の方の成績等にも影響しません。</li>"
+             "<li><b>参加できる方：</b>18歳以上で、聴力に自覚的な異常のない方。</li>"
+             "<li><b>負担と配慮：</b>長い聴取で疲れることがあります。音量は最初にご自身で「十分に大きく、かつ不快ではない」大きさに合わせてください。不快に感じたら、すぐに中止してください。</li>"
+             "<li><b>記録する情報：</b>評価の回答、聴取にかかった時間、ヘッドホンの機種、音量の設定値、ブラウザーの種類と画面サイズ、最後の質問への回答（聴覚の自覚的な異常の有無、音楽・音響の経験年数を含む）。氏名・連絡先・IPアドレスは記録しません。回答は無作為の参加者コードで管理します。</li>"
+             "<li><b>データの扱い：</b>回答は実施者が管理するクラウド上の表（Googleスプレッドシート）に保存し、本研究の目的にのみ使います。{retention}保管したのち削除します。</li>"
+             "<li><b>結果の公表：</b>学会発表や論文で、統計処理した形でのみ公表します。個人が特定されることはありません。</li>"
+             "<li><b>同意の撤回：</b>参加後も{deadline}までは同意を取り消せます。終了画面に表示される参加者コードを控え、下記の連絡先にお知らせください。コードがないと、どの回答かを特定できません。</li>"
+             "<li><b>謝礼：</b>対面で参加された方には、謝礼として菓子等をお渡しします。オンライン参加の謝礼はありません。</li>"
+             "<li><b>審査：</b>この研究は東京藝術大学研究倫理審査の承認を得ています（承認番号 {approval}）。</li></ul>"
+             "<p><b>問い合わせ先</b><br>研究実施者：{experimenter}<br>研究責任者：{pi}</p>",
+             "<p><b>Consent</b></p><ul>"
+             "<li><b>Taking part is voluntary.</b> Not taking part, or stopping part-way, has no disadvantage for you, and does not affect the grades of Tokyo University of the Arts students.</li>"
+             "<li><b>Who can take part:</b> people aged 18 or over with no known hearing problem.</li>"
+             "<li><b>Burden and care:</b> long listening can be tiring. At the start you set the volume yourself to a level that is clearly loud but not uncomfortable. Stop at once if anything feels uncomfortable.</li>"
+             "<li><b>What is recorded:</b> your ratings, listening times, headphone model, volume setting, browser type and screen size, and your answers to the final questions (including whether you notice any hearing problem and your years of experience in music or audio). Your name, contact details and IP address are not recorded; answers are kept under a random participant code.</li>"
+             "<li><b>Data handling:</b> answers are stored in a cloud table (Google Sheets) managed by the experimenter and used for this research only. They are kept for {retention} and then deleted.</li>"
+             "<li><b>Publication:</b> results appear in presentations and papers in statistical form only. You cannot be identified.</li>"
+             "<li><b>Withdrawing consent:</b> you can withdraw until {deadline}. Note the participant code shown on the last screen and send it to the contact below. Without the code your answers cannot be found.</li>"
+             "<li><b>Thanks:</b> people who take part in person receive snacks or similar. There is no reward for taking part online.</li>"
+             "<li><b>Review:</b> this study has been approved by the research ethics review of Tokyo University of the Arts (approval number {approval}).</li></ul>"
+             "<p><b>Contact</b><br>Experimenter: {experimenter}<br>Principal investigator: {pi}</p>"),
+ "consentAge": ("만 18세 이상입니다.", "18歳以上です。", "I am 18 or older."),
+ "consentCheck": ("위 내용을 읽고 이해했으며, 이 연구에 참여하는 데 동의합니다.", "上記の説明を読み、理解したうえで、本研究に参加することに同意します。", "I have read and understood the above, and I agree to take part in this study."),
  "credits": ("홀 모델·홀 사진: BRAS (Aspöck et al., 2020, CC BY-SA 4.0), 측면 하부·객석·무대 위 인물은 재구성. 음악: Aalto 무향 녹음 (Pätynen, Pulkki & Lokki, 2008). 인물: MetaHuman (Epic Games).",
              "ホールモデル・ホール写真：BRAS（Aspöck et al., 2020, CC BY-SA 4.0）。側面下部・客席・舞台上の人物は再構成。音楽：Aalto無響録音（Pätynen, Pulkki & Lokki, 2008）。人物：MetaHuman（Epic Games）。",
              "Hall model and photograph: BRAS (Aspöck et al., 2020, CC BY-SA 4.0); lower side walls, seats and performers reconstructed. Music: Aalto anechoic recordings (Pätynen, Pulkki & Lokki, 2008). Characters: MetaHuman (Epic Games)."),
@@ -126,6 +157,7 @@ T = {
  "sending": ("결과를 전송하는 중입니다…", "結果を送信しています…", "Sending your answers…"),
  "endOk": ("참여해 주셔서 감사합니다. 결과가 전송되었습니다.", "ご参加いただき、ありがとうございました。結果は送信されました。", "Thank you for taking part. Your answers have been sent."),
  "endFail": ("참여해 주셔서 감사합니다. 결과를 전송하지 못했습니다. 아래 버튼으로 결과 파일을 내려받아 실험자에게 보내 주십시오.", "ご参加いただき、ありがとうございました。結果を送信できませんでした。下のボタンで結果ファイルをダウンロードし、実験者に送ってください。", "Thank you for taking part. Your answers could not be sent. Please download the results file with the button below and send it to the experimenter."),
+ "endCode": ("참가자 코드: <b>{pid}</b><br>동의를 철회할 때 필요합니다. 적어 두십시오.", "参加者コード：<b>{pid}</b><br>同意を撤回する際に必要です。控えておいてください。", "Participant code: <b>{pid}</b><br>You need it to withdraw your consent. Please note it down."),
  "download": ("결과 파일 내려받기", "結果ファイルをダウンロード", "Download results file"),
 }
 here = os.path.dirname(os.path.abspath(__file__))

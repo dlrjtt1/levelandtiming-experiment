@@ -135,18 +135,24 @@
     const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `levelandtiming_${S.session.pid}_${S.session.session_id}.json`; a.click();
   }
 
+  function ethicsVals() {   // contact details, deadline etc. come from config.js (P2_CONFIG.ethics); unset ones show as [TBD]
+    const E = CFG.ethics || {}, o = {};
+    ["experimenter", "pi", "deadline", "retention", "approval"].forEach((k) => { o[k] = E[k] ? String(E[k]).replace(/[<>&"]/g, "") : "[TBD]"; });
+    return o;
+  }
   // ---------- screens ----------
   const next = () => { stop(); S.idx++; save(); run(); };
   const screens = {
     consent() {
       const pid = S.session.pid || Q.get("pid") || (MODE === "online" ? "W" : "L") + S.session.session_id.slice(0, 6).toUpperCase();   // W = online, L = lab; can be overwritten
-      show(`<h1>${t("introH")}</h1>${t("intro")}${t("consent")}
+      show(`<h1>${t("introH")}</h1>${t("intro")}${t("consent", ethicsVals())}
+        <label class="check"><input type="checkbox" id="age"><span>${t("consentAge")}</span></label>
         <label class="check"><input type="checkbox" id="ok"><span>${t("consentCheck")}</span></label>
         <p><label>${t("pid")}<br><input type="text" id="pid" value="${pid}" maxlength="40"></label></p>
         <div class="row"><button id="go" disabled>${t("next")}</button></div><p class="credits">${t("credits")}</p>`);
-      const upd = () => { $("#go").disabled = !($("#ok").checked && $("#pid").value.trim()); };
-      $("#ok").onchange = upd; $("#pid").oninput = upd;
-      $("#go").onclick = () => { S.session.pid = $("#pid").value.trim(); S.session.consent_at = now(); next(); };
+      const upd = () => { $("#go").disabled = !($("#age").checked && $("#ok").checked && $("#pid").value.trim()); };
+      $("#age").onchange = upd; $("#ok").onchange = upd; $("#pid").oninput = upd;
+      $("#go").onclick = () => { S.session.pid = $("#pid").value.trim(); S.session.consent_at = now(); S.session.age18 = true; next(); };
     },
     headphones() {
       show(`<h1>${t("hpH")}</h1>${t("hp")}<p><label>${t("hpModel")}<br><input type="text" id="hp" maxlength="80"></label></p>
@@ -329,7 +335,8 @@
       if (MODE === "lab" && S.session.volume_system_end === undefined) S.session.volume_system_end = await sysvol();   // differs from volume_system if the volume was changed during the session
       const ok = await send(true);
       S.done = true; save();
-      show(`<h1>${t("endH")}</h1><p class="${ok ? "" : "warn"}">${t(ok ? "endOk" : "endFail")}</p><div class="row"><button class="${ok ? "ghost" : ""}" id="dl">${t("download")}</button></div>`);
+      const code = String(S.session.pid || "").replace(/[<>&"]/g, "");
+      show(`<h1>${t("endH")}</h1><p class="${ok ? "" : "warn"}">${t(ok ? "endOk" : "endFail")}</p><p class="code">${t("endCode", { pid: code })}</p><div class="row"><button class="${ok ? "ghost" : ""}" id="dl">${t("download")}</button></div>`);
       $("#dl").onclick = download;
     }
   };

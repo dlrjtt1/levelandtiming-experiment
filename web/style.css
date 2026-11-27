@@ -159,3 +159,5 @@ body:not(.immersive) #app { padding-top:110px; }
 @media (min-width:1300px) { .panel .q { grid-template-columns:430px 1fr; } }
 .card .credits { margin-top:36px; color:rgba(255,255,255,.4) !important; line-height:1.5; }
 #app .credits { font-size:13px !important; }
+
+.code { margin-top:14px; padding:10px 12px; border:1px solid var(--line); border-radius:8px; }

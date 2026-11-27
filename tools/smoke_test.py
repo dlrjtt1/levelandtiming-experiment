@@ -14,7 +14,7 @@ def run(pw, mode, lang, shots):
         p.route("https://script.google.com/**", lambda r: (posted.append(json.loads(r.request.post_data)), r.fulfill(json={"ok": True, "stored": 0}, headers={"Access-Control-Allow-Origin": "*"})) if r.request.method == "POST" else r.fulfill(json={"order": "RCL"}, headers={"Access-Control-Allow-Origin": "*"}))
     p.goto(f"http://localhost:8765/?mode={mode}&debug=1&lang={lang}&audiobase=audio_test&ext=wav" + ("&order=LRC" if mode == "online" else ""))
     click = lambda s: p.click(s, timeout=20000)
-    p.wait_for_selector("#ok"); p.check("#ok"); p.fill("#pid", "T01"); click("#go")
+    p.wait_for_selector("#ok"); p.check("#age"); p.check("#ok"); p.fill("#pid", "T01"); click("#go")
     if mode == "online":
         p.wait_for_selector("#hp"); ok(p.is_disabled("#go"), "headphone screen needs model and tick"); p.fill("#hp", "Test HD600"); p.check("#ok"); click("#go")
     # left-right check: answer wrong once, then right
@@ -79,6 +79,7 @@ def run(pw, mode, lang, shots):
     else:
         ok(S["session"]["seat_order"] == "LRC" and S["session"]["headphone"] == "Test HD600", "online: order from url, headphone stored")
         ok("warn" in (p.get_attribute("p.warn", "class") or ""), "online without endpoint: failure message with download")
+        ok("T01" in p.inner_text(".code"), "end screen shows the participant code (" + p.inner_text(".code") + " / pid " + str(p.evaluate("window.__p2.state().session.pid")) + ")")
         with p.expect_download() as d: click("#dl")
         ok(len(json.load(open(d.value.path()))["trials"]) == 12, "download holds the 12 trials")
     ok(not errs, f"no page errors {errs}"); b.close()
