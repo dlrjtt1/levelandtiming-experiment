@@ -6,8 +6,8 @@ window.P2_CONFIG = {
   repetitions: { L: 1, C: 2, R: 1 },   // centre seat twice (retest reliability), side seats once -> 60 trials
   seatOrders: ["LCR", "LRC", "CLR", "CRL", "RLC", "RCL"],
   ethics: {                 // shown on the consent screen; fill in before data collection (empty = "[TBD]" on screen)
-    experimenter: "",       // e.g. "柳 東均（東京藝術大学 研究生） name@example.com"
-    pi: "",                 // research supervisor (研究責任者), name, title, e-mail
+    experimenter: "",       // the only contact address shown, e.g. "柳 東均（東京藝術大学 研究生） name@example.com"
+    pi: "",                 // research supervisor (研究責任者): name and title only, no e-mail (questions go to the experimenter)
     deadline: "",           // last day to withdraw consent, e.g. "2027年3月31日"
     retention: "",          // how long data are kept, e.g. "論文発表後10年間"
     approval: ""            // approval number of the ethics review

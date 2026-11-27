@@ -26,7 +26,7 @@ T = {
              "<li><b>동의 철회:</b> 참여 후에도 {deadline}까지 철회할 수 있습니다. 종료 화면에 나오는 참가자 코드를 적어 두었다가 아래 연락처로 알려 주십시오. 코드가 없으면 어떤 응답인지 찾을 수 없습니다.</li>"
              "<li><b>사례:</b> 대면으로 참여한 분께는 과자 등을 드립니다. 온라인 참여의 사례는 없습니다.</li>"
              "<li><b>심사:</b> 이 연구는 도쿄예술대학 연구윤리심사의 승인을 받았습니다(승인 번호 {approval}).</li></ul>"
-             "<p><b>문의처</b><br>연구 실시자: {experimenter}<br>연구 책임자: {pi}</p>",
+             "<p><b>문의처</b><br>{experimenter}<br>(연구 책임자: {pi})</p>",
              "<p><b>参加への同意</b></p><ul>"
              "<li><b>参加は自由です。</b>参加しないこと、途中でやめることによる不利益は一切ありません。東京藝術大学の学生の方の成績等にも影響しません。</li>"
              "<li><b>参加できる方：</b>18歳以上で、聴力に自覚的な異常のない方。</li>"
@@ -37,7 +37,7 @@ T = {
              "<li><b>同意の撤回：</b>参加後も{deadline}までは同意を取り消せます。終了画面に表示される参加者コードを控え、下記の連絡先にお知らせください。コードがないと、どの回答かを特定できません。</li>"
              "<li><b>謝礼：</b>対面で参加された方には、謝礼として菓子等をお渡しします。オンライン参加の謝礼はありません。</li>"
              "<li><b>審査：</b>この研究は東京藝術大学研究倫理審査の承認を得ています（承認番号 {approval}）。</li></ul>"
-             "<p><b>問い合わせ先</b><br>研究実施者：{experimenter}<br>研究責任者：{pi}</p>",
+             "<p><b>問い合わせ先</b><br>{experimenter}<br>（研究責任者：{pi}）</p>",
              "<p><b>Consent</b></p><ul>"
              "<li><b>Taking part is voluntary.</b> Not taking part, or stopping part-way, has no disadvantage for you, and does not affect the grades of Tokyo University of the Arts students.</li>"
              "<li><b>Who can take part:</b> people aged 18 or over with no known hearing problem.</li>"
@@ -48,7 +48,7 @@ T = {
              "<li><b>Withdrawing consent:</b> you can withdraw until {deadline}. Note the participant code shown on the last screen and send it to the contact below. Without the code your answers cannot be found.</li>"
              "<li><b>Thanks:</b> people who take part in person receive snacks or similar. There is no reward for taking part online.</li>"
              "<li><b>Review:</b> this study has been approved by the research ethics review of Tokyo University of the Arts (approval number {approval}).</li></ul>"
-             "<p><b>Contact</b><br>Experimenter: {experimenter}<br>Principal investigator: {pi}</p>"),
+             "<p><b>Contact</b><br>{experimenter}<br>(Principal investigator: {pi})</p>"),
  "consentAge": ("만 18세 이상입니다.", "18歳以上です。", "I am 18 or older."),
  "consentCheck": ("위 내용을 읽고 이해했으며, 이 연구에 참여하는 데 동의합니다.", "上記の説明を読み、理解したうえで、本研究に参加することに同意します。", "I have read and understood the above, and I agree to take part in this study."),
  "credits": ("홀 모델·홀 사진: BRAS (Aspöck et al., 2020, CC BY-SA 4.0), 측면 하부·객석·무대 위 인물은 재구성. 음악: Aalto 무향 녹음 (Pätynen, Pulkki & Lokki, 2008). 인물: MetaHuman (Epic Games).",
