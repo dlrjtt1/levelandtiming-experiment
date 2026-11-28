@@ -1,5 +1,5 @@
 """End-to-end run of the page in headless Chrome (debug mode: 2 trials per repetition).
-usage: python tools/smoke_test.py   (serves web/ itself; needs playwright and web/audio_test/{main,practice}/*.wav)"""
+usage: python tools/smoke_test.py   (serves web/ itself; needs playwright; uses web/audio_test/{main,practice}/*.wav if that folder exists, otherwise the real stimuli)"""
 import json, os, subprocess, sys, time, random
 from playwright.sync_api import sync_playwright
 root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "web")
@@ -12,7 +12,7 @@ def run(pw, mode, lang, shots):
     errs = []; p.on("pageerror", lambda e: errs.append(str(e))); posted = []
     if mode == "lab":
         p.route("https://script.google.com/**", lambda r: (posted.append(json.loads(r.request.post_data)), r.fulfill(json={"ok": True, "stored": 0}, headers={"Access-Control-Allow-Origin": "*"})) if r.request.method == "POST" else r.fulfill(json={"order": "RCL"}, headers={"Access-Control-Allow-Origin": "*"}))
-    p.goto(f"http://localhost:8765/?mode={mode}&debug=1&lang={lang}&audiobase=audio_test&ext=wav" + ("&order=LRC" if mode == "online" else ""))
+    p.goto(f"http://localhost:8765/?mode={mode}&debug=1&lang={lang}" + ("&audiobase=audio_test&ext=wav" if os.path.isdir(os.path.join(root, "audio_test")) else "") + ("&order=LRC" if mode == "online" else ""))
     click = lambda s: p.click(s, timeout=20000)
     p.wait_for_selector("#ok"); p.check("#age"); p.check("#ok"); p.fill("#pid", "T01"); click("#go")
     if mode == "online":

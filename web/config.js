@@ -2,6 +2,7 @@
 window.P2_CONFIG = {
   version: "pilot2-0.4",
   minListenS: 5,            // "next" opens after this many seconds of listening (answers can be chosen from the start)
+  sendTimeoutS: 45,         // a transmission with no answer after this many seconds counts as failed and is sent again later
   autoPlay: true,           // each sound starts by itself when its screen appears
   repetitions: { L: 1, C: 2, R: 1 },   // centre seat twice (retest reliability), side seats once -> 60 trials
   seatOrders: ["LCR", "LRC", "CLR", "CRL", "RLC", "RCL"],

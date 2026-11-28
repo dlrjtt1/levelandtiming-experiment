@@ -8,6 +8,7 @@ T = {
  "loadError": ("소리를 불러오지 못했습니다. 인터넷 연결을 확인한 뒤 다시 시도해 주십시오.", "音を読み込めませんでした。インターネット接続を確認して、もう一度お試しください。", "The sounds could not be loaded. Please check your connection and try again."),
  "retry": ("다시 시도", "再試行", "Try again"),
  "resend": ("결과 다시 보내기", "結果を再送信", "Send the results again"),
+ "otherTab": ("이 세션은 다른 탭(창)에서 이어서 진행되고 있습니다. 이 탭은 닫아 주세요.", "このセッションは別のタブ（ウィンドウ）で続行されています。このタブは閉じてください。", "This session is being continued in another tab or window. Please close this one."),
  "resumeQ": ("진행 중이던 실험이 있습니다. 이어서 하시겠습니까?", "途中まで進めた実験があります。続きから再開しますか。", "An unfinished session was found. Continue where you left off?"),
  "resumeYes": ("이어서 하기", "続きから", "Continue"), "resumeNo": ("처음부터", "最初から", "Start over"),
  "seatL": ("왼쪽", "左", "left"), "seatC": ("가운데", "中央", "centre"), "seatR": ("오른쪽", "右", "right"),

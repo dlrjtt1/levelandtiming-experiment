@@ -28,6 +28,7 @@ sheet keeps the two apart in the column `mode`, and seat orders are balanced sep
   (`web/img/seat_{L,C,R}.jpg`, ear position and head direction as in the BRIRs, 94° horizontal view). See "Seat pictures".
 - `tools/test_design.js` checks of the order logic (`node tools/test_design.js`).
 - `tools/smoke_test.py` full run in headless Chrome, online and lab mode (`python tools/smoke_test.py`).
+- `tools/stress_lab.py`, `tools/stress_lab2.py` stress tests of the lab page: odd participant behaviour (double clicks, reloads, two tabs, random input for a whole session), a receiver that is down, slow, silent or answers `ok:false`, a page server that dies mid-block, blocked storage, damaged saved sessions, small windows. Nothing reaches the real sheet.
 - `tools/results_to_csv.py` downloaded result files -> `sessions.csv`, `trials.csv`.
 
 ## Audio

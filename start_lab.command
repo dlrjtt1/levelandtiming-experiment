@@ -20,5 +20,9 @@ class H(http.server.SimpleHTTPRequestHandler):
         super().do_GET()
     def log_message(self, *a): pass
 print("Serving on http://localhost:8000  (close this window to stop)")
-http.server.ThreadingHTTPServer(("127.0.0.1", 8000), H).serve_forever()
+try:
+    srv = http.server.ThreadingHTTPServer(("127.0.0.1", 8000), H)
+except OSError:   # started twice: the first window is still serving, the page opens from it
+    print("Port 8000 is already in use: the lab server is probably running in another Terminal window. This window can be closed."); raise SystemExit
+srv.serve_forever()
 PY

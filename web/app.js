@@ -8,8 +8,11 @@
   if (Q.get("ext")) M.ext = Q.get("ext");
   const MIN = DEBUG ? 1 : CFG.minListenS, KEY = "levelandtiming_session_" + MODE;
   const app = document.getElementById("app");
-  let T = {}, design = null, S = null, steps = [], ctx = null, cur = null;
-  const buffers = new Map();
+  let T = {}, design = null, S = null, steps = [], ctx = null, cur = null, locked = false;
+  const buffers = new Map(), TAB = Math.random().toString(36).slice(2), LANGS = ["ko", "ja", "en"];
+  const store = { get() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }, del() { try { localStorage.removeItem(KEY); } catch (e) { /* blocked */ } } };
+  // participant code: letters, digits, - and _ only (it goes into a spreadsheet cell and a file name)
+  const cleanPid = (v) => String(v || "").normalize("NFKC").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40);
 
   const t = (k, v) => (T[k] || k).replace(/\{(\w+)\}/g, (_, x) => (v && v[x] != null ? v[x] : ""));
   // Seat and trial screens are drawn over a full-window picture of the hall seen from the listener's seat
@@ -25,20 +28,34 @@
     return `<ol class="prog">` + [0, 1, 2, 3, 4].map((k) => `<li class="${k < cur ? "done" : k === cur ? "now" : ""}">${t("stage" + k)}</li>`).join("") + `</ol>`;
   }
   const show = (html) => {
+    if (locked) return;
     document.body.classList.remove("immersive"); if (bg) bg.hidden = true;
     const st = S && steps && steps[S.idx];
-    app.innerHTML = `${stageBar()}<div class="card${st && WIDE[st.type] ? " wide" : ""}">${html}</div>`; window.scrollTo(0, 0);
+    app.innerHTML = `${stageBar()}<div class="card${st && WIDE[st.type] ? " wide" : ""}">${html}</div>`; window.scrollTo(0, 0); shownAt = performance.now();
   };
+  // The second click of a double click must not land on the screen that the first click opened (e.g. skip the instructions).
+  let shownAt = 0;
+  document.addEventListener("click", (e) => { if (e.detail > 1 && performance.now() - shownAt < 600) { e.stopPropagation(); e.preventDefault(); } }, true);
   function showIn(seat, html) {
+    if (locked) return;
     if (!bg) { bg = document.createElement("div"); bg.id = "hallbg"; document.body.prepend(bg); }
     bg.style.backgroundImage = `url("${seatPic(seat)}")`; bg.dataset.seat = seat; bg.hidden = false;
     document.body.classList.add("immersive");
-    app.innerHTML = html; window.scrollTo(0, 0);
+    app.innerHTML = html; window.scrollTo(0, 0); shownAt = performance.now();
   }
   const preloadPic = (seat) => new Promise((res) => { const im = new Image(); im.onload = im.onerror = res; im.src = seatPic(seat); });
   const $ = (s) => app.querySelector(s);
   const seatName = (s) => t("seat" + s);
-  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* storage full or blocked: continue without resume */ } };
+  const save = () => { if (locked) return; S.tab = TAB; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* storage full or blocked: continue without resume */ } };
+  // The same session continued in another tab or window (e.g. the page was opened again and "continue" was chosen there): this one stops,
+  // otherwise both would record the same trials.
+  window.addEventListener("storage", (e) => {
+    if (locked || !S || e.key !== KEY || !e.newValue) return;
+    let x = null; try { x = JSON.parse(e.newValue); } catch (err) { return; }
+    if (!x || !x.session || x.session.session_id !== S.session.session_id || x.tab === TAB) return;
+    stop(); window.onbeforeunload = null;
+    show(`<div class="mid"><p class="warn">${t("otherTab")}</p></div>`); locked = true;
+  });
   const now = () => new Date().toISOString();
 
   // ---------- audio ----------
@@ -120,15 +137,24 @@
   }
 
   // ---------- sending ----------
-  async function send(final) {
-    if (!M.endpoint) return false;
-    const body = JSON.stringify({ session: S.session, trials: S.trials.slice(S.sent), first_index: S.sent + 1, final: !!final });
+  // One transmission at a time. A transmission counts only when the receiver answers {"ok": true} (the Apps Script answers
+  // HTTP 200 with ok:false when writing to the sheet failed), and only the trials that were in it are marked as sent
+  // (more may have been recorded while it was on its way). No answer within sendTimeoutS = failed; it is sent again later.
+  let queue = Promise.resolve();
+  function send(final) { const p = queue.then(() => send1(final)); queue = p.catch(() => false); return p; }
+  async function send1(final) {
+    if (!M.endpoint || locked) return false;
+    const from = S.sent, upto = S.trials.length;
+    const body = JSON.stringify({ session: S.session, trials: S.trials.slice(from, upto), first_index: from + 1, final: !!final });
+    const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), 1000 * (CFG.sendTimeoutS || 45));
     try {
       // text/plain keeps the request "simple" (no preflight), which a Google Apps Script web app needs
-      const r = await fetch(M.endpoint, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body });
+      const r = await fetch(M.endpoint, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body, signal: ctl.signal });
       if (!r.ok) throw new Error(r.status);
-      S.sent = S.trials.length; save(); return true;
-    } catch (e) { console.error("send failed", e); return false; }
+      const x = await r.json().catch(() => null);
+      if (!x || x.ok !== true) throw new Error("receiver: " + (x && x.error || "no confirmation"));
+      S.sent = Math.max(S.sent, upto); save(); return true;
+    } catch (e) { console.error("send failed", e); return false; } finally { clearTimeout(timer); }
   }
   function download() {
     const blob = new Blob([JSON.stringify({ session: S.session, trials: S.trials }, null, 1)], { type: "application/json" });
@@ -144,15 +170,16 @@
   const next = () => { stop(); S.idx++; save(); run(); };
   const screens = {
     consent() {
-      const pid = S.session.pid || Q.get("pid") || (MODE === "online" ? "W" : "L") + S.session.session_id.slice(0, 6).toUpperCase();   // W = online, L = lab; can be overwritten
+      const pid = cleanPid(S.session.pid) || cleanPid(Q.get("pid")) || (MODE === "online" ? "W" : "L") + S.session.session_id.slice(0, 6).toUpperCase();   // W = online, L = lab; can be overwritten
       show(`<h1>${t("introH")}</h1>${t("intro")}${t("consent", ethicsVals())}
         <label class="check"><input type="checkbox" id="age"><span>${t("consentAge")}</span></label>
         <label class="check"><input type="checkbox" id="ok"><span>${t("consentCheck")}</span></label>
         <p><label>${t("pid")}<br><input type="text" id="pid" value="${pid}" maxlength="40"></label></p>
         <div class="row"><button id="go" disabled>${t("next")}</button></div><p class="credits">${t("credits")}</p>`);
-      const upd = () => { $("#go").disabled = !($("#age").checked && $("#ok").checked && $("#pid").value.trim()); };
+      const upd = () => { $("#go").disabled = !($("#age").checked && $("#ok").checked && cleanPid($("#pid").value)); };
       $("#age").onchange = upd; $("#ok").onchange = upd; $("#pid").oninput = upd;
-      $("#go").onclick = () => { S.session.pid = $("#pid").value.trim(); S.session.consent_at = now(); S.session.age18 = true; next(); };
+      $("#pid").onchange = () => { $("#pid").value = cleanPid($("#pid").value); upd(); };   // other characters are removed when the field is left
+      $("#go").onclick = () => { const v = cleanPid($("#pid").value); if (!v || !$("#age").checked || !$("#ok").checked) return upd(); S.session.pid = v; S.session.consent_at = now(); S.session.age18 = true; next(); };
     },
     headphones() {
       show(`<h1>${t("hpH")}</h1>${t("hp")}<p><label>${t("hpModel")}<br><input type="text" id="hp" maxlength="80"></label></p>
@@ -193,8 +220,8 @@
       show(`<h1>${t("volH")}</h1>${t("vol")}${LAB ? `<p>${t("volLab")}</p>` : ""}<div class="row"><button id="pl">${t("play")}</button></div>
         <p><label>${t(LAB ? "volSetLab" : "volSetOnline")}<br><input type="text" id="vs" maxlength="40" value="${(S.session.volume_setting || "").replace(/"/g, "")}"></label></p>
         <div class="row"><button id="go" disabled>${t("volDone")}</button></div>`);
-      let t0 = 0, heard = 0, listened = false, typed = false, sys = null;
-      const upd = () => { const b = $("#go"); if (b) b.disabled = !(listened && (!LAB || $("#vs").value.trim())); };
+      let t0 = 0, heard = 0, listened = false, typed = false, sys = null, leaving = false;
+      const upd = () => { const b = $("#go"); if (b && !leaving) b.disabled = !(listened && (!LAB || $("#vs").value.trim())); };
       $("#vs").oninput = () => { typed = true; upd(); };
       // lab on the Mac started by start_lab.command: the local server reports the macOS output volume (0-100); the field follows it until someone types
       const poll = LAB ? setInterval(async () => {
@@ -207,7 +234,7 @@
         play(buf, { loop: true, onstop: () => { heard += (performance.now() - t0) / 1000; const b = $("#pl"); if (b) b.textContent = t("play"); } });
         setTimeout(() => { listened = true; upd(); }, DEBUG ? 300 : 3000);
       };
-      $("#go").onclick = async () => { clearInterval(poll); S.session.volume_setting = $("#vs").value.trim(); if (LAB) S.session.volume_system = await sysvol(); stop(); S.session.volume_listen_s = Math.round(heard * 10) / 10; next(); };
+      $("#go").onclick = async () => { if (leaving) return; leaving = true; $("#go").disabled = true; clearInterval(poll); S.session.volume_setting = $("#vs").value.trim(); if (LAB) S.session.volume_system = await sysvol(); stop(); S.session.volume_listen_s = Math.round(heard * 10) / 10; next(); };
     },
     instructions() { show(`<h1>${t("insH")}</h1>${t("ins")}<div class="row"><button id="go">${t("next")}</button></div>`); $("#go").onclick = next; },
     quiz() {
@@ -291,6 +318,7 @@
       // the sound starts by itself (one click less per sound) when the browser allows it; otherwise the play button is used
       if (CFG.autoPlay && ac().state === "running") setTimeout(() => { if ($("#pl") && tFirst == null && !cur) start(); }, 350);
       $("#go").onclick = () => {
+        if (steps[S.idx] !== st || !unlocked || !(val("q1") && val("q2") && val("q3"))) return;   // only once, and only a complete answer
         const rec = { q1: val("q1"), q1_hard: $("#q1dk").checked ? 1 : 0, q2: val("q2"), q3: val("q3") };
         stop(); clearInterval(timer);
         if (!st.practice) {
@@ -325,7 +353,7 @@
       bindScales(app, upd); app.querySelectorAll('input[name="p5"]').forEach((e) => (e.onchange = upd));
       $("#go").onclick = () => {
         S.session.post = { q1q3_difficult: val("p1"), unstable_how: [...app.querySelectorAll('input[name="p2"]:checked')].map((e) => e.value).join(""), unstable_other: $("#p2o").value.trim(),
-          fatigue: val("p3"), experience_years: $("#p4").value === "" ? null : Number($("#p4").value), hearing_problem: val("p5"), comments: $("#p6").value.trim() };
+          fatigue: val("p3"), experience_years: ((v) => (v === "" || !(Number(v) >= 0 && Number(v) <= 80) ? null : Number(v)))($("#p4").value), hearing_problem: val("p5"), comments: $("#p6").value.trim() };
         S.session.finished_at = now(); next();
       };
     },
@@ -347,12 +375,14 @@
   };
   function run() {
     const st = steps[S.idx];
+    // the screen being left stays visible while the next one loads its sound: switch its controls off, or a second click on it would count again
+    app.querySelectorAll("button, input, textarea").forEach((e) => { e.disabled = true; });
     if (DEBUG) console.log("step", S.idx, st);
     (screens[st.type === "break" ? "break_" : st.type])(st);
   }
 
   // ---------- start ----------
-  async function setLang(lang) { T = await (await fetch(`i18n/${lang}.json`)).json(); document.documentElement.lang = lang; document.title = t("title"); }
+  async function setLang(lang) { const r = await fetch(`i18n/${lang}.json`); if (!r.ok) throw new Error(r.status + " i18n/" + lang); T = await r.json(); document.documentElement.lang = lang; document.title = t("title"); }
   const build = () => window.P2Design.buildSteps(design, S.session.seat_order, S.session.seed, { mode: MODE, repetitions: CFG.repetitions, trialsPerRep: DEBUG ? 2 : 0 });
   async function assignOrder() {
     const o = Q.get("order"); if (o && CFG.seatOrders.includes(o)) return [o, "url"];
@@ -366,22 +396,42 @@
     S = { idx: 0, sent: 0, done: false, trials: [], session: { session_id: rnd[1].toString(16).padStart(8, "0") + rnd[2].toString(16).padStart(8, "0"), pid: "", mode: MODE, lang, version: CFG.version, debug: DEBUG,
       seat_order: order, seat_order_source: src, seed: rnd[0], min_listen_s: MIN, auto_play: !!CFG.autoPlay, stimulus_set: design.stimulus_set.brir_sofa_sha256.slice(0, 12), audio_ext: M.ext,
       user_agent: navigator.userAgent, screen: `${screen.width}x${screen.height}`, started_at: now() } };
-    steps = build(); save(); go();
+    steps = build(); S.nsteps = steps.length; save(); go();
   }
   function go() { window.onbeforeunload = (e) => { e.preventDefault(); e.returnValue = ""; }; run(); }
   window.__p2 = { state: () => S, steps: () => steps };
 
-  design = await (await fetch("design.json")).json();
-  let saved = null; try { saved = JSON.parse(localStorage.getItem(KEY)); } catch (e) { saved = null; }
-  if (saved && !saved.done && saved.session && saved.session.debug === DEBUG && saved.session.version === CFG.version) {
-    await setLang(saved.session.lang);
-    show(`<div class="mid"><p>${t("resumeQ")}</p><div class="row"><button id="y">${t("resumeYes")}</button><button class="ghost" id="n">${t("resumeNo")}</button></div></div>`);
-    $("#y").onclick = () => { S = saved; steps = build(); go(); };
-    $("#n").onclick = () => { localStorage.removeItem(KEY); location.reload(); };
-    return;
+  function bootFail(e) {   // design or language file could not be loaded: say so (three languages, the texts may be what is missing)
+    console.error(e); document.body.classList.remove("immersive"); if (bg) bg.hidden = true;
+    app.innerHTML = `<div class="card"><p class="warn">ページを読み込めませんでした。再読み込みしてください。<br>페이지를 불러오지 못했습니다. 새로고침해 주세요.<br>The page could not be loaded. Please reload.</p><div class="row"><button id="rl">↻</button></div></div>`;
+    $("#rl").onclick = () => location.reload();
   }
-  const ql = Q.get("lang");
-  if (["ko", "ja", "en"].includes(ql)) return fresh(ql);
-  show(`<div class="mid"><p class="eyebrow">언어 / 言語 / Language</p><div class="langs"><button class="ghost" data-l="ko">한국어</button><button class="ghost" data-l="ja">日本語</button><button class="ghost" data-l="en">English</button></div></div>`);
-  app.querySelectorAll("[data-l]").forEach((b) => (b.onclick = () => fresh(b.dataset.l)));
+  const stepsOf = (ses) => window.P2Design.buildSteps(design, ses.seat_order, ses.seed, { mode: MODE, repetitions: CFG.repetitions, trialsPerRep: DEBUG ? 2 : 0 });
+  function readSaved() {   // an unfinished session of this mode and version that can really be continued, or null
+    let x = null; try { x = JSON.parse(store.get()); } catch (e) { return null; }
+    const s = x && x.session;
+    if (!x || typeof x !== "object" || x.done || !s || typeof s !== "object" || s.debug !== DEBUG || s.version !== CFG.version) return null;
+    if (!LANGS.includes(s.lang) || !CFG.seatOrders.includes(s.seat_order) || typeof s.seed !== "number" || typeof s.session_id !== "string") return null;
+    if (!Array.isArray(x.trials) || !Number.isInteger(x.idx) || x.idx < 0 || !Number.isInteger(x.sent) || x.sent < 0 || x.sent > x.trials.length) return null;
+    const n = stepsOf(s).length;
+    if (x.idx >= n || (x.nsteps && x.nsteps !== n)) return null;   // saved by a build with a different sequence of screens
+    return x;
+  }
+  try {
+    design = await (await fetch("design.json")).json();
+    const saved = readSaved();
+    if (saved) {
+      await setLang(saved.session.lang);
+      const total = stepsOf(saved.session).filter((x) => x.type === "trial" && !x.practice).length;
+      // code and progress are shown so that a session left by the previous participant is not continued by mistake
+      show(`<div class="mid"><p>${t("resumeQ")}</p><p class="code">${cleanPid(saved.session.pid) || "—"} · ${saved.trials.length} / ${total}</p><div class="row"><button id="y">${t("resumeYes")}</button><button class="ghost" id="n">${t("resumeNo")}</button></div></div>`);
+      $("#y").onclick = () => { S = readSaved() || saved; steps = build(); save(); go(); };   // read again: another tab may have gone on since this prompt appeared
+      $("#n").onclick = () => { store.del(); location.reload(); };
+      return;
+    }
+    const ql = Q.get("lang");
+    if (LANGS.includes(ql)) return await fresh(ql);
+    show(`<div class="mid"><p class="eyebrow">언어 / 言語 / Language</p><div class="langs"><button class="ghost" data-l="ko">한국어</button><button class="ghost" data-l="ja">日本語</button><button class="ghost" data-l="en">English</button></div></div>`);
+    app.querySelectorAll("[data-l]").forEach((b) => (b.onclick = () => fresh(b.dataset.l).catch(bootFail)));
+  } catch (e) { bootFail(e); }
 })();

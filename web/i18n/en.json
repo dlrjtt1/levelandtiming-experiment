@@ -9,6 +9,7 @@
  "loadError": "The sounds could not be loaded. Please check your connection and try again.",
  "retry": "Try again",
  "resend": "Send the results again",
+ "otherTab": "This session is being continued in another tab or window. Please close this one.",
  "resumeQ": "An unfinished session was found. Continue where you left off?",
  "resumeYes": "Continue",
  "resumeNo": "Start over",
