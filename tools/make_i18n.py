@@ -51,7 +51,7 @@ T = {
              "<li><b>Thanks:</b> people who take part in person receive snacks or similar. There is no reward for taking part online.</li>"
              "<li><b>Review:</b> this study has been approved by the research ethics review of Tokyo University of the Arts (approval number {approval}).</li></ul>"
              "<p><b>Contact</b><br>{experimenter}<br>(Principal investigator: {pi})</p>"),
- "consentAge": ("만 18세 이상입니다.", "18歳以上です。", "I am 18 or older."),
+ "consentAge": ("만 18세 이상이며, 위의 '참여할 수 있는 분' 조건을 충족합니다.", "18歳以上で、上記の「参加できる方」の条件を満たしています。", "I am 18 or older and meet the conditions under \"Who can take part\" above."),
  "consentCheck": ("위 내용을 읽고 이해했으며, 이 연구에 참여하는 데 동의합니다.", "上記の説明を読み、理解したうえで、本研究に参加することに同意します。", "I have read and understood the above, and I agree to take part in this study."),
  "credits": ("홀 모델·홀 사진: BRAS (Aspöck et al., 2020, CC BY-SA 4.0), 측면 하부·객석·무대 위 인물은 재구성. 음악: Aalto 무향 녹음 (Pätynen, Pulkki & Lokki, 2008). 인물: MetaHuman (Epic Games).",
              "ホールモデル・ホール写真：BRAS（Aspöck et al., 2020, CC BY-SA 4.0）。側面下部・客席・舞台上の人物は再構成。音楽：Aalto無響録音（Pätynen, Pulkki & Lokki, 2008）。人物：MetaHuman（Epic Games）。",
