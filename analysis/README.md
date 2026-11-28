@@ -32,8 +32,9 @@ Output per mode (lab = main data, online = secondary, analysed separately):
 
 - **Cleaning:** drops debug runs, participant codes containing `TEST`, other site versions, unfinished sessions,
   and a second session of the same participant code; removes re-sent duplicate trials.
-- **Exclusion:** criteria A (hidden reference, Q2 ≤ 2 in 2 of 4) and B (centre-seat retest mean |difference| ≥ 1.6),
-  same rule as `tools/screening.py`. Every analysis is reported with and without the excluded listeners.
+- **Exclusion:** criteria A (hidden reference, Q2 ≤ 2 in 2 of 4), B (centre-seat retest mean |difference| ≥ 1.6), same rule as
+  `tools/screening.py`, and C (eligibility: "yes" to the post-question on hearing problems; "don't know" is kept; decided
+  2026-11-28 before any data). Every analysis is reported with and without the excluded listeners.
 - **Primary tests:** each listener's contrast of mean answers, one-sample t over listeners (as in `tools/power_sim.py`),
   effect in answer points with 95 % CI and d_z.
   - H1: mean(−6, −3 dB) vs +6 dB, Holm over Q1–Q3

@@ -6,7 +6,8 @@ usage:
 
 Everything that decides the result was fixed before data collection (project docs 2026-11-25_pilot2_short_version,
 2026-11-27_pilot2_dryrun_power, research proposal H1-H3):
-- exclusion criteria A and B (same code as tools/screening.py); the analysis is reported with and without them
+- exclusion criteria A and B (same code as tools/screening.py) and C (eligibility: answered "yes" to the post-question on hearing
+  problems; "don't know" is kept, decided 2026-11-28 before any data); the analysis is reported with and without them
 - primary inference = one-sample t-tests over listeners on each listener's contrast of mean answers (the test the power
   analysis assumed), effect = mean difference in answer points with 95 % CI and d_z
 - families: H1 over Q1-Q3 (Holm); four neighbouring level steps (Bonferroni .05/4); -9 vs -6 equivalence by TOST, +-0.3 points;
@@ -53,7 +54,8 @@ def clean(t, s, version):
     return t_ok.drop(columns="pid_s"), s, log
 
 
-def screen(t):
+def screen(t, s):
+    hearing = s.set_index("pid")["post_hearing_problem"] if "post_hearing_problem" in s else pd.Series(dtype=object)
     rows = []
     for pid, g in t.groupby("pid"):
         hid = g[g["hidden"] == 1]
@@ -66,7 +68,9 @@ def screen(t):
         b = float(np.mean(diffs)) if diffs else np.nan
         ex_a = len(hid) > 0 and a_fails >= A_MIN_FAILS
         ex_b = bool(b >= B_LIMIT) if not np.isnan(b) else False
-        rows.append(dict(pid=pid, hidden_n=len(hid), A_fails=a_fails, B_mean_abs_diff=round(b, 3), exclude_A=ex_a, exclude_B=ex_b, exclude=ex_a or ex_b))
+        ex_c = str(hearing.get(pid, "")).lower() == "yes"        # eligibility: reported a hearing problem ("dk" = don't know is kept)
+        rows.append(dict(pid=pid, hidden_n=len(hid), A_fails=a_fails, B_mean_abs_diff=round(b, 3), hearing_problem=hearing.get(pid, ""),
+                         exclude_A=ex_a, exclude_B=ex_b, exclude_C=ex_c, exclude=ex_a or ex_b or ex_c))
     return pd.DataFrame(rows)
 
 
@@ -331,7 +335,7 @@ def main():
         if tm["pid"].nunique() < 3:
             continue
         sm_ = s_all[(s_all["mode"] == mode) & (s_all["drop_reason"] == "")]
-        scr = screen(tm); scr.to_csv(os.path.join(a.out, f"screening_{mode}.csv"), index=False)
+        scr = screen(tm, sm_); scr.to_csv(os.path.join(a.out, f"screening_{mode}.csv"), index=False)
         kept = scr.loc[~scr["exclude"], "pid"]
         t_main = tm[tm["pid"].isin(kept)]
         res, lm, info = analyse_set(t_main, "after exclusions", a.out, f"{mode}_main")
@@ -352,7 +356,7 @@ def write_report(out, mode, simulated, log, s_all, scr, res, res_all, lm, lm_all
     L.append("\n## 1. 데이터와 제외")
     n_ses = len(s_all[s_all["mode"] == mode]); n_ok = scr.shape[0]; n_ex = int(scr["exclude"].sum())
     L.append(f"- 수신 세션 {n_ses}개 → 분석 대상 완료 세션 {n_ok}명. 정리 사유(전체 모드): " + ("; ".join(log) if log else "없음"))
-    L.append(f"- 사전 확정 제외 기준: A(숨은 기준음 4개 중 2개 이상 Q2 ≤ 2) {int(scr['exclude_A'].sum())}명, B(C석 재검사 평균 절대차 ≥ 1.6) {int(scr['exclude_B'].sum())}명, 합계 {n_ex}명 → **주 분석 {n_ok - n_ex}명**.")
+    L.append(f"- 사전 확정 제외 기준: A(숨은 기준음 4개 중 2개 이상 Q2 ≤ 2) {int(scr['exclude_A'].sum())}명, B(C석 재검사 평균 절대차 ≥ 1.6) {int(scr['exclude_B'].sum())}명, C(참여 조건: 사후 질문에서 청각 이상 \"있음\") {int(scr['exclude_C'].sum())}명, 합계 {n_ex}명(중복 제외) → **주 분석 {n_ok - n_ex}명**.")
     L.append("- 전체 표본(제외 전) 결과는 4절 민감도 분석에 함께 제시한다.")
     L.append("\n## 2. 계획된 대비 (주 분석)")
     L.append("참가자마다 조건 평균의 차이를 구하고 참가자들에 걸쳐 단일표본 t검정. 효과 = 응답 점수 차(1–5 척도), 95% CI, d_z. 양수 = 앞에 적은 조건이 더 높게 평가됨.")
@@ -384,7 +388,7 @@ def write_report(out, mode, simulated, log, s_all, scr, res, res_all, lm, lm_all
     for k, v in q.items():
         if isinstance(v, (pd.DataFrame, pd.Series)) and len(v):
             L.append(f"\n**{k}**\n\n" + md_table(v.reset_index() if isinstance(v, pd.Series) else v.reset_index(), 3))
-    L.append("\n- `post_hearing_problem` = yes인 참가자는 참여 조건(청각 이상 없음)에 어긋난다. 사전 제외 기준이 아니므로 자동으로 빼지 않았다. 처리 방법은 따로 결정해 보고할 것.")
+    L.append("\n- `post_hearing_problem` = yes는 기준 C로 주 분석에서 제외했다(2026-11-28, 데이터 수집 전 결정). \"모르겠다\"는 참여 조건 위반이 아니므로 포함했다.")
     L.append("- retest: C석 1·2회차 15조건의 평균 절대차와 Spearman 상관(참가자별 값의 중앙값). separability: 참가자 안에서 문항 간 Spearman 상관(높을수록 두 문항을 구분하지 못했다는 뜻).")
     L.append("\n## 7. 해석할 때 주의")
     L.append("- 결과는 BRAS CR3 시뮬레이션 BRIR, 한 곡(모차르트 아리아), 가정한 PA 위치, 범용 HRTF(KU100) 조건의 헤드폰 청취에 한정된다. 실제 홀 PA 조건에서 검증된 결과가 아니다.")
