@@ -196,7 +196,9 @@ def quality(t, s):
             if g[a].nunique() > 1 and g[b].nunique() > 1:
                 sep.append(dict(pair=f"{a}-{b}", r=stats.spearmanr(g[a], g[b]).statistic))
     q["separability"] = pd.DataFrame(sep).groupby("pair")["r"].describe()[["count", "25%", "50%", "75%"]].round(2) if sep else pd.DataFrame()
-    dur = (s["finished_at"] - s["started_at"]).dt.total_seconds() / 60 if "finished_at" in s else pd.Series(dtype=float)
+    # from consent, not from page start: a session can be opened (language chosen) long before the participant arrives and then resumed
+    t0 = s["consent_at"].fillna(s["started_at"]) if "consent_at" in s else s["started_at"]
+    dur = (s["finished_at"] - t0).dt.total_seconds() / 60 if "finished_at" in s else pd.Series(dtype=float)
     q["duration_min"] = dur.describe().round(1)
     q["listen_s"] = t["listen_s"].describe().round(2)
     q["quiz_attempts"] = s["quiz_attempts"].value_counts().sort_index() if "quiz_attempts" in s else pd.Series(dtype=int)
