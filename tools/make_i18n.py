@@ -14,7 +14,7 @@ T = {
 
  "introH": ("실험 안내", "実験について", "About this experiment"),
  "intro": ("<p>이 실험에서는 콘서트홀 객석에 앉아 공연을 듣는 상황을 헤드폰으로 재현합니다. 무대 위에서 소프라노가 오케스트라와 함께 노래하고, 소프라노의 목소리는 무대 양옆 스피커(PA)로 보강됩니다.</p><p>여러분은 객석의 세 자리(왼쪽·가운데·오른쪽)에 차례로 앉아, 소프라노의 노래가 어떻게 들리는지 평가합니다.</p><p>소요 시간은 약 30분이며, 중간에 휴식이 있습니다.</p>",
-           "<p>この実験では、コンサートホールの客席に座って公演を聴く状況をヘッドホンで再現します。舞台上ではソプラノ歌手がオーケストラと共に歌い、ソプラノの声は舞台の両脇のスピーカー（PA）で補強されています。</p><p>皆さんは客席の3つの席（左・中央・右）に順番に座り、ソプラノの歌声がどのように聞こえるかを評価します。</p><p>所要時間は約30分で、途中に休憩があります。</p>",
+           "<p>この実験では、コンサートホールの客席に座って公演を聴く状況をヘッドホンで再現します。舞台上ではソプラノ歌手がオーケストラと共に歌い、ソプラノの声は舞台の両脇のスピーカー（PA）で補強されています。</p><p>参加者の皆さまには、客席の3つの席（左・中央・右）に順番に座った状態で、ソプラノの歌声がどのように聞こえるかを評価していただきます。</p><p>所要時間は約30分で、途中に休憩があります。</p>",
            "<p>In this experiment, headphones recreate listening to a performance from a seat in a concert hall. On stage, a soprano sings with an orchestra, and the soprano's voice is reinforced through loudspeakers (PA) on both sides of the stage.</p><p>You will sit in three seats in the audience (left, centre, right) in turn and rate how the soprano's singing sounds.</p><p>The experiment takes about 30 minutes, with breaks.</p>"),
  "consent": ("<p><b>참여 동의</b></p><ul>"
              "<li><b>참여는 자유입니다.</b> 참여하지 않거나 도중에 그만두어도 불이익은 없습니다. 도쿄예술대학 학생의 성적 등에도 영향을 주지 않습니다.</li>"
@@ -28,15 +28,15 @@ T = {
              "<li><b>심사:</b> 이 연구는 도쿄예술대학 연구윤리심사의 승인을 받았습니다(승인 번호 {approval}).</li></ul>"
              "<p><b>문의처</b><br>{experimenter}<br>(연구 책임자: {pi})</p>",
              "<p><b>参加への同意</b></p><ul>"
-             "<li><b>参加は自由です。</b>参加しないこと、途中でやめることによる不利益は一切ありません。東京藝術大学の学生の方の成績等にも影響しません。</li>"
-             "<li><b>参加できる方：</b>18歳以上で、聴力に自覚的な異常のない方。</li>"
-             "<li><b>負担と配慮：</b>長い聴取で疲れることがあります。音量は最初に小さめから少しずつ上げ、ご自身で「十分に大きく、かつ不快ではない」大きさに合わせてください。不快に感じたら、すぐに中止してください。</li>"
-             "<li><b>記録する情報：</b>評価の回答、聴取にかかった時間、ヘッドホンの機種、音量の設定値、ブラウザーの種類と画面サイズ、最後の質問への回答（聴覚の自覚的な異常の有無、音楽・音響の経験年数を含む）。氏名・連絡先・IPアドレスは記録しません。回答は無作為の参加者コードで管理します。</li>"
-             "<li><b>データの扱い：</b>回答は実施者が管理するクラウド上の表（Googleスプレッドシート）に保存し、本研究の目的にのみ使います。本学の規則に従い10年間保管したのち削除します。</li>"
-             "<li><b>結果の公表：</b>学会発表や論文で、統計処理した形でのみ公表します。個人が特定されることはありません。</li>"
-             "<li><b>同意の撤回：</b>参加後も{deadline}までは同意を取り消せます。終了画面に表示される参加者コードを控え、下記の連絡先にお知らせください。コードがないと、どの回答かを特定できません。</li>"
-             "<li><b>謝礼：</b>対面で参加された方には、謝礼として菓子等をお渡しします。オンライン参加の謝礼はありません。</li>"
-             "<li><b>審査：</b>この研究は東京藝術大学研究倫理審査の承認を得ています（承認番号 {approval}）。</li></ul>"
+             "<li><b>参加は自由です。</b>参加しなくても、途中でやめても、不利益を受けることは一切ありません。本学の学生の方の場合も、成績等には一切影響しません。</li>"
+             "<li><b>参加できる方：</b>18歳以上で、聴覚に自覚的な異常のない方。</li>"
+             "<li><b>負担と配慮：</b>長時間の聴取により、疲れを感じることがあります。音量は最初に小さめから少しずつ上げ、ご自身で「十分に大きく、かつ不快ではない」大きさに合わせてください。不快に感じたら、すぐに中止してください。</li>"
+             "<li><b>記録する情報：</b>評価の回答、聴取にかかった時間、ヘッドホンの機種、音量の設定値、ブラウザーの種類と画面サイズ、最後の質問への回答（聴覚の自覚的な異常の有無、音楽・音響の経験年数を含む）。氏名・連絡先・IPアドレスは記録しません。回答は、無作為に割り当てた参加者コードで管理します。</li>"
+             "<li><b>データの扱い：</b>回答は実施者が管理するクラウド上の表（Googleスプレッドシート）に保存し、本研究の目的以外には使用しません。本学の規則に従い10年間保管したのち削除します。</li>"
+             "<li><b>結果の公表：</b>学会発表や論文において、統計処理した形でのみ公表します。個人が特定されることはありません。</li>"
+             "<li><b>同意の撤回：</b>参加後も、{deadline}までは同意を撤回できます。終了画面に表示される参加者コードを控え、下記の連絡先にお知らせください。コードがない場合はご本人の回答を特定できないため、撤回の手続きができません。</li>"
+             "<li><b>謝礼：</b>対面で参加された方には、謝礼として菓子等をお渡しします。オンラインでの参加には謝礼はありません。</li>"
+             "<li><b>審査：</b>本研究は、東京藝術大学研究倫理審査会の承認を得て実施しています（承認番号 {approval}）。</li></ul>"
              "<p><b>問い合わせ先</b><br>{experimenter}<br>（研究責任者：{pi}）</p>",
              "<p><b>Consent</b></p><ul>"
              "<li><b>Taking part is voluntary.</b> Not taking part, or stopping part-way, has no disadvantage for you, and does not affect the grades of Tokyo University of the Arts students.</li>"
@@ -71,7 +71,7 @@ T = {
 
  "volH": ("음량 맞추기", "音量の調整", "Volume setting"),
  "vol": ("<p>이제부터 들을 소리 가운데 가장 큰 소리와 같은 크기의 음악이 반복해서 재생됩니다.</p><p>먼저 음량을 작게 한 뒤 조금씩 올려, <b>충분히 크지만 불편하지 않은 크기</b>가 되도록 컴퓨터(또는 헤드폰)의 볼륨을 맞춰 주십시오.</p><p>맞춘 뒤에는 실험이 끝날 때까지 <b>볼륨을 바꾸지 마십시오.</b> 실험 중 소리의 크기가 조건마다 달라지는 것은 의도된 것입니다.</p>",
-         "<p>これから聞く音の中で最も大きい音と同じ大きさの音楽が、繰り返し再生されます。</p><p>まず音量を小さめにしてから少しずつ上げ、<b>十分に大きく、かつ不快ではない大きさ</b>になるように、コンピューター（またはヘッドホン）の音量を調整してください。</p><p>調整した後は、実験が終わるまで<b>音量を変えないでください。</b>実験中に条件によって音の大きさが変わるのは、意図されたものです。</p>",
+         "<p>実験で使う音のうち、最も大きい音と同じ大きさの音楽が繰り返し再生されます。</p><p>まず音量を小さめにしてから少しずつ上げ、<b>十分に大きく、かつ不快ではない大きさ</b>になるように、コンピューター（またはヘッドホン）の音量を調整してください。</p><p>調整した後は、実験が終わるまで<b>音量を変えないでください。</b>なお、実験中は条件によって音の大きさが変わることがありますが、これは意図したものです。</p>",
          "<p>Music as loud as the loudest sound in this experiment will play repeatedly.</p><p>Start with the volume low and raise it gradually. Adjust the volume of your computer (or headphones) so that it is <b>clearly loud but not uncomfortable</b>.</p><p>After that, <b>do not change the volume</b> until the end of the experiment. Differences in loudness between sounds during the experiment are intended.</p>"),
  "volDone": ("볼륨을 맞췄습니다", "音量を調整しました", "I have set the volume"),
  "volLab": ("음량은 실험자가 안내하는 장치로 조절해 주십시오. 맞춘 뒤 실험자에게 알려 주십시오.", "音量は実験者が案内する機器で調整してください。調整が終わったら実験者に知らせてください。", "Use the device the experimenter shows you to set the volume, then tell the experimenter."),
@@ -102,7 +102,7 @@ T = {
  "qz": ("본 실험 전에, 질문의 뜻을 바르게 이해했는지 확인합니다. 각 상황에서 어떻게 답하면 되는지 골라 주십시오. 소리는 나오지 않습니다.", "本実験の前に、質問の意味を正しく理解しているかを確認します。それぞれの状況でどのように答えればよいかを選んでください。音は出ません。", "Before the main part, let us check that the questions are clear. For each situation, choose how you should answer. No sound is played."),
  "qz1": ("노래가 스피커 쪽에서 들렸지만, 한 점에 또렷하게 모여 있었습니다.", "歌はスピーカー側から聞こえましたが、一点にはっきりまとまっていました。", "The singing came from the loudspeaker, but it was clearly gathered at one point."),
  "qz2": ("노래가 가수 위치에서 들렸지만, 둘로 갈라지거나 넓게 번져 들렸습니다.", "歌は歌手の位置から聞こえましたが、二つに分かれたり、広くにじんだりして聞こえました。", "The singing came from the singer's position, but it split in two or was spread widely."),
- "qz3": ("기준음보다 소리가 조금 크게 들렸지만, 목소리가 겹치거나 메아리처럼 들리지는 않았습니다. 질문 2는?", "基準音より音が少し大きく聞こえましたが、声が二重やこだまのように聞こえることはありませんでした。質問2は？", "The sound was a little louder than the reference, but the voice did not sound doubled or echo-like. Question 2?"),
+ "qz3": ("기준음보다 소리가 조금 크게 들렸지만, 목소리가 겹치거나 메아리처럼 들리지는 않았습니다. 질문 2는?", "基準音より音が少し大きく聞こえましたが、声が二重やこだまのように聞こえることはありませんでした。このとき、質問2はどう答えますか。", "The sound was a little louder than the reference, but the voice did not sound doubled or echo-like. Question 2?"),
  "qzHL": ("질문 1 낮게, 질문 3 높게", "質問1を低く、質問3を高く", "Question 1 low, Question 3 high"),
  "qzLH": ("질문 1 높게, 질문 3 낮게", "質問1を高く、質問3を低く", "Question 1 high, Question 3 low"),
  "qzHH": ("질문 1 높게, 질문 3 높게", "質問1を高く、質問3を高く", "Question 1 high, Question 3 high"),
@@ -113,7 +113,7 @@ T = {
  "qz2why": ("가수 위치이므로 질문 1은 높게, 갈라지거나 번졌으므로 질문 3은 낮게 답합니다. 위치와 모임 정도는 따로 판단합니다.", "歌手の位置なので質問1は高く、分かれたりにじんだりしたので質問3は低く答えます。位置とまとまりは別々に判断します。", "It came from the singer, so Question 1 is high; it split or spread, so Question 3 is low. Position and gathering are judged separately."),
  "qz3why": ("소리의 크기는 질문 2에서 판단하지 않습니다. 겹침이나 메아리가 없었다면 높게 답합니다.", "音の大きさは質問2では判断しません。二重やこだまがなければ高く答えます。", "Loudness is not part of Question 2. If there was no doubling or echo, answer high."),
  "qzCheck": ("확인", "確認", "Check"), "qzRetry": ("다시 확인", "もう一度確認", "Check again"),
- "trialHint": ("소리는 자동으로 재생됩니다. 들으면서 바로 답할 수 있고, {s}초 이상 들으면 다음으로 넘어갈 수 있습니다. 다시 들을 수도 있습니다.", "音は自動的に再生されます。聞きながらすぐに回答でき、{s}秒以上聞くと次に進めます。もう一度聞くこともできます。", "The sound starts by itself. You can answer while listening and go on after {s} seconds. You may listen again."),
+ "trialHint": ("소리는 자동으로 재생됩니다. 들으면서 바로 답할 수 있고, {s}초 이상 들으면 다음으로 넘어갈 수 있습니다. 다시 들을 수도 있습니다.", "音は自動的に再生されます。再生中でも回答でき、{s}秒以上聞くと「次へ」を押せるようになります。もう一度聞くこともできます。", "The sound starts by itself. You can answer while listening and go on after {s} seconds. You may listen again."),
  "q1": ("질문 1. 방향: 노래가 가수 위치에서 들렸나요?", "質問1. 方向：歌は歌手の位置から聞こえましたか。", "Question 1. Direction: Did the singing come from the singer's position?"),
  "q1a": ("스피커 쪽에서 들렸다", "スピーカー側から聞こえた", "From the loudspeaker"), "q1b": ("가수 위치에서 들렸다", "歌手の位置から聞こえた", "From the singer"),
  "q1dk": ("판단하기 어려웠다", "判断が難しかった", "Hard to judge"),
@@ -125,7 +125,7 @@ T = {
  "practiceTag": ("연습 {n} / {of} · {seat} 자리", "練習 {n} / {of} · {seat}の席", "Practice {n} / {of} · {seat} seat"),
 
  "pracH": ("연습", "練習", "Practice"),
- "prac": ("본 실험 전에 연습으로 4개의 소리를 들어 봅니다. 평가 방법에 익숙해지기 위한 것이며, 결과는 기록되지 않습니다. 연습에서 듣는 소리는 본 실험과 다른 구간의 음악입니다.", "本実験の前に、練習として4つの音を聞きます。評価の方法に慣れるためのもので、結果は記録されません。練習で聞く音は、本実験とは別の区間の音楽です。", "Before the main part, you will hear four sounds for practice. This is to get used to rating; the answers are not recorded. The practice sounds use a different passage of the music from the main part."),
+ "prac": ("본 실험 전에 연습으로 4개의 소리를 들어 봅니다. 평가 방법에 익숙해지기 위한 것이며, 결과는 기록되지 않습니다. 연습에서 듣는 소리는 본 실험과 다른 구간의 음악입니다.", "本実験の前に、練習として4つの音を聞きます。評価の方法に慣れるためのもので、結果は記録されません。練習では、本実験とは別の部分の音楽を使います。", "Before the main part, you will hear four sounds for practice. This is to get used to rating; the answers are not recorded. The practice sounds use a different passage of the music from the main part."),
  "pracEnd": ("연습이 끝났습니다. 이제 본 실험을 시작합니다.", "練習が終わりました。これから本実験を始めます。", "Practice is finished. The main part starts now."),
 
  "seatH": ("{seat} 자리입니다.", "{seat}の席です。", "You are in the {seat} seat."),
@@ -147,8 +147,8 @@ T = {
  "p2": ("노래가 불안정하게 들렸을 때, 주로 어떻게 들렸습니까? (해당하는 것을 모두 선택)", "歌が不安定に聞こえたとき、主にどのように聞こえましたか。（当てはまるものをすべて選択）", "When the singing sounded unstable, how did it mainly sound? (choose all that apply)"),
  "p2a": ("둘로 갈라짐", "二つに分かれた", "Split in two"), "p2b": ("위치가 움직임", "位置が動いた", "Moved"), "p2c": ("넓게 번짐", "広くにじんだ", "Spread widely"), "p2d": ("기타", "その他", "Other"),
  "p3": ("실험 중 피로를 느꼈습니까?", "実験中に疲れを感じましたか。", "Did you feel tired during the experiment?"),
- "p4": ("음악 또는 음향 관련 경력(전공·직업 포함, 년)", "音楽または音響に関する経験（専攻・職業を含む、年）", "Years of experience in music or audio (including study and work)"),
- "p5": ("청력에 이상을 느끼고 있습니까?", "聴覚に異常を感じていますか。", "Do you notice any problems with your hearing?"),
+ "p4": ("음악 또는 음향 관련 경력(전공·직업 포함, 년)", "音楽または音響に関する経験年数（専攻・職業を含む）", "Years of experience in music or audio (including study and work)"),
+ "p5": ("청력에 이상을 느끼고 있습니까?", "現在、聴覚に異常を感じていますか。", "Do you notice any problems with your hearing?"),
  "yes": ("예", "はい", "Yes"), "no": ("아니오", "いいえ", "No"), "dk": ("모르겠다", "分からない", "Don't know"),
  "p6": ("기타 의견", "その他のご意見", "Other comments"),
  "submit": ("제출", "送信", "Submit"),
