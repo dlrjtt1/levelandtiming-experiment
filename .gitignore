@@ -14,3 +14,8 @@ render/*.blend
 render/out/
 render/*.png
 render/ue/*.png
+
+# participant data and analysis output stay out of the public repository
+analysis_out/
+data/
+sim/
