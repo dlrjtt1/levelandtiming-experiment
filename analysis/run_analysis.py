@@ -14,7 +14,7 @@ Everything that decides the result was fixed before data collection (project doc
 - linear mixed model (random intercept per listener) with likelihood-ratio tests per term, sum coding: supporting, not primary
 Lab (in-person) and online data are analysed separately; lab is the main data set.
 """
-import argparse, json, os, sys
+import argparse, os, sys
 import numpy as np, pandas as pd
 from scipy import stats
 
@@ -348,7 +348,7 @@ def write_report(out, mode, simulated, log, s_all, scr, res, res_all, lm, lm_all
     L.append(f"# 2차 파일럿 분석 결과 — {'대면(lab)' if mode == 'lab' else '온라인(online)'}")
     if simulated:
         L.append("\n> **모의 데이터입니다.** `analysis/simulate.py`가 가정한 효과로 만든 시험용 값이며 지각 결과가 아닙니다. 분석 코드가 제대로 도는지 확인하는 용도입니다.")
-    L.append(f"\n생성: `analysis/run_analysis.py`. 대면과 온라인은 따로 분석한다(대면 = 주 데이터).")
+    L.append("\n생성: `analysis/run_analysis.py`. 대면과 온라인은 따로 분석한다(대면 = 주 데이터).")
     L.append("\n## 1. 데이터와 제외")
     n_ses = len(s_all[s_all["mode"] == mode]); n_ok = scr.shape[0]; n_ex = int(scr["exclude"].sum())
     L.append(f"- 수신 세션 {n_ses}개 → 분석 대상 완료 세션 {n_ok}명. 정리 사유(전체 모드): " + ("; ".join(log) if log else "없음"))

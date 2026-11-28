@@ -19,3 +19,4 @@ render/ue/*.png
 analysis_out/
 data/
 sim/
+__pycache__/
