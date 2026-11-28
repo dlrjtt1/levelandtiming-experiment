@@ -13,6 +13,8 @@ Everything that decides the result was fixed before data collection (project doc
 - families: H1 over Q1-Q3 (Holm); four neighbouring level steps (Bonferroni .05/4); -9 vs -6 equivalence by TOST, +-0.3 points;
   ITDG pairs over 0/20/40 ms (Holm); H2 ITDG x seat as in the power analysis; ITDG x level is exploratory
 - linear mixed model (random intercept per listener) with likelihood-ratio tests per term, sum coding: supporting, not primary
+- cumulative link mixed model with the same terms (clmm.py): sensitivity analysis for treating the 1-5 answers as numbers
+- conditions in which Q1-Q3 all stay above the midpoint (lower 95 % CI bound > 3): exploratory description
 Lab (in-person) and online data are analysed separately; lab is the main data set.
 """
 import argparse, os, sys
@@ -150,14 +152,20 @@ def _sum_cols(x, levels, name):
     return pd.DataFrame(cols)
 
 
-def lmm(t, item):
-    import statsmodels.api as sm
-    d = t[t["hidden"] == 0].dropna(subset=[item]).reset_index(drop=True)
+def _terms(d):
+    """Sum-coded design columns per model term (level, ITDG, seat and their interactions)."""
     f = {"level": _sum_cols(d["level_ratio_db"], LEVELS, "lv"), "itdg": _sum_cols(d["itdg_ms"], ITDGS, "it"), "seat": _sum_cols(d["seat"], SEATS, "st")}
     terms = dict(f)
     for a, b in (("level", "itdg"), ("level", "seat"), ("itdg", "seat")):
         terms[f"{a} x {b}"] = pd.DataFrame({f"{x}:{y}": f[a][x] * f[b][y] for x in f[a] for y in f[b]})
     terms["level x itdg x seat"] = pd.DataFrame({f"{x}:{y}:{z}": f["level"][x] * f["itdg"][y] * f["seat"][z] for x in f["level"] for y in f["itdg"] for z in f["seat"]})
+    return terms
+
+
+def lmm(t, item):
+    import statsmodels.api as sm
+    d = t[t["hidden"] == 0].dropna(subset=[item]).reset_index(drop=True)
+    terms = _terms(d)
 
     def fit(names):
         X = pd.concat([pd.Series(1.0, index=d.index, name="const")] + [terms[n] for n in names], axis=1)
@@ -171,6 +179,47 @@ def lmm(t, item):
         rows.append(dict(item=item, term=n, df=df_, LR=lr, p=stats.chi2.sf(max(lr, 0), df_)))
     var_subj = float(full.cov_re.iloc[0, 0]); var_res = float(full.scale)
     return pd.DataFrame(rows), dict(item=item, listener_sd=np.sqrt(var_subj), residual_sd=np.sqrt(var_res), n_obs=len(d), converged=bool(full.converged))
+
+
+def clmm_lrt(t, item):
+    """Sensitivity analysis: the same fixed effects in a cumulative link mixed model (ordinal answers, logit link, random
+    intercept per listener); likelihood-ratio test per term. Implementation and check against R ordinal::clmm: clmm.py."""
+    from clmm import CLMM
+    d = t[t["hidden"] == 0].dropna(subset=[item]).reset_index(drop=True)
+    terms = _terms(d); names = list(terms)
+
+    def fit(use, start=None):
+        X = pd.concat([terms[n] for n in use], axis=1).to_numpy()
+        return CLMM(d[item].astype(int).to_numpy(), X, d["pid"].to_numpy()).fit(start)
+    full = fit(names)
+    rows = []
+    for n in names:
+        red = fit([m for m in names if m != n])
+        lr = 2 * (full.llf - red.llf); df_ = terms[n].shape[1]
+        rows.append(dict(item=item, term=n, df=df_, LR=lr, p=stats.chi2.sf(max(lr, 0), df_), converged=full.converged and red.converged))
+    return pd.DataFrame(rows), dict(item=item, listener_sd_logit=full.sigma, categories_used=len(full.cats), n_obs=len(d), converged=full.converged)
+
+
+# ---------------------------------------------------------------- conditions that keep all three ratings above the midpoint
+def valid_conditions(t):
+    """Exploratory (fixed before data collection, 2026-11-28): a condition (seat x ITDG x level ratio) counts as one where
+    direction, naturalness and stability are all kept when, for each of Q1-Q3, the lower bound of the 95 % CI of the mean over
+    listeners (each listener's mean in that condition; centre seat = mean of its two repetitions) is above the scale
+    midpoint 3. No correction for the 45 x 3 intervals: descriptive, not a test."""
+    d = t[t["hidden"] == 0]
+    rows = []
+    for (seat, itdg, lv), g in d.groupby(["seat", "itdg_ms", "level_ratio_db"]):
+        r = dict(seat=seat, itdg_ms=itdg, level_ratio_db=lv)
+        ok = True
+        for item in ITEMS:
+            v = g.groupby("pid")[item].mean().dropna(); n = len(v)
+            m = v.mean(); se = v.std(ddof=1) / np.sqrt(n) if n > 1 else np.nan
+            lo = m - stats.t.ppf(0.975, n - 1) * se if n > 1 else np.nan
+            r[f"{item}_mean"] = m; r[f"{item}_ci_low"] = lo
+            ok = ok and bool(lo > 3)
+        r["n"] = n; r["all_above_3"] = ok
+        rows.append(r)
+    return pd.DataFrame(rows)
 
 
 # ---------------------------------------------------------------- data quality
@@ -316,7 +365,12 @@ def analyse_set(t, label, out, tag):
     for item in ITEMS:
         a, b = lmm(t, item); lm_rows.append(a); lm_info.append(b)
     lm = pd.concat(lm_rows); lm.to_csv(os.path.join(out, f"lmm_lrt_{tag}.csv"), index=False)
-    return res, lm, pd.DataFrame(lm_info)
+    cl_rows, cl_info = [], []
+    for item in ITEMS:
+        a, b = clmm_lrt(t, item); cl_rows.append(a); cl_info.append(b)
+    cl = pd.concat(cl_rows); cl.to_csv(os.path.join(out, f"clmm_lrt_{tag}.csv"), index=False)
+    vc = valid_conditions(t); vc.to_csv(os.path.join(out, f"valid_conditions_{tag}.csv"), index=False)
+    return res, lm, pd.DataFrame(lm_info), cl, pd.DataFrame(cl_info), vc
 
 
 def main():
@@ -340,16 +394,16 @@ def main():
         scr = screen(tm, sm_); scr.to_csv(os.path.join(a.out, f"screening_{mode}.csv"), index=False)
         kept = scr.loc[~scr["exclude"], "pid"]
         t_main = tm[tm["pid"].isin(kept)]
-        res, lm, info = analyse_set(t_main, "after exclusions", a.out, f"{mode}_main")
-        res_all, lm_all, _ = analyse_set(tm, "all listeners", a.out, f"{mode}_all")
+        res, lm, info, cl, cl_info, vc = analyse_set(t_main, "after exclusions", a.out, f"{mode}_main")
+        res_all, lm_all, _, cl_all, _, _ = analyse_set(tm, "all listeners", a.out, f"{mode}_all")
         fig_means(t_main, os.path.join(a.out, f"fig_means_{mode}.png"), f"Pilot 2, {mode}: mean answers by seat, level ratio and ITDG (n = {t_main['pid'].nunique()})")
         fig_contrasts(res, os.path.join(a.out, f"fig_contrasts_{mode}.png"), f"Pilot 2, {mode}: planned contrasts (n = {t_main['pid'].nunique()})")
         q = quality(tm, sm_)
-        write_report(a.out, mode, simulated, log, s_all, scr, res, res_all, lm, lm_all, info, q, t_main)
+        write_report(a.out, mode, simulated, log, s_all, scr, res, res_all, lm, lm_all, info, q, t_main, cl, cl_info, vc)
     print("done ->", a.out)
 
 
-def write_report(out, mode, simulated, log, s_all, scr, res, res_all, lm, lm_all, info, q, t_main):
+def write_report(out, mode, simulated, log, s_all, scr, res, res_all, lm, lm_all, info, q, t_main, cl, cl_info, vc):
     L = []
     L.append(f"# 2차 파일럿 분석 결과 — {'대면(lab)' if mode == 'lab' else '온라인(online)'}")
     if simulated:
@@ -386,6 +440,22 @@ def write_report(out, mode, simulated, log, s_all, scr, res, res_all, lm, lm_all
     lmx = lm.copy(); lmx["p"] = lmx["p"].map(pstr)
     L.append(md_table(lmx, 2))
     L.append("\n" + md_table(info, 3))
+    L.append("\n### 5.1 누적 링크 혼합모형 (민감도 분석)")
+    L.append("같은 고정효과를 순서형 응답 모형(누적 로짓, 참가자 무작위 절편, Gauss–Hermite 100점, 최대우도)으로 다시 적합하고 항별 우도비 검정. 응답을 숫자가 아니라 순서 범주로 다뤄도 결론이 같은지 본다. 구현은 R ordinal::clmm과 대조했다(`analysis/clmm.py`).")
+    j = lm[["item", "term", "p"]].merge(cl[["item", "term", "LR", "p"]], on=["item", "term"], suffixes=("_lmm", "_clmm"))
+    j["same_at_.05"] = (j["p_lmm"] < 0.05) == (j["p_clmm"] < 0.05)
+    j["p_lmm"] = j["p_lmm"].map(pstr); j["p_clmm"] = j["p_clmm"].map(pstr)
+    L.append(md_table(j, 2))
+    diff = j[~j["same_at_.05"]]
+    L.append("\n" + ("두 모형의 .05 기준 판정이 모든 항에서 같다." if diff.empty else "**판정이 다른 항:** " + "; ".join(f"{ITEMS[r.item]} {r.term}" for r in diff.itertuples()) + ". 이 항의 해석은 조심한다."))
+    L.append("\n" + md_table(cl_info, 3))
+    L.append("\n### 5.2 세 평가가 모두 유지되는 조건 (탐색적)")
+    L.append("조건마다 Q1–Q3 각각의 참가자 평균 95% CI 하한이 척도 중앙값 3보다 크면 ✓ (데이터 수집 전 규칙, 2026-11-28). 45조건 × 3문항에 다중성 보정을 하지 않은 기술 통계이며 검정이 아니다.")
+    for seat in SEATS:
+        v = vc[vc["seat"] == seat].pivot_table(index="itdg_ms", columns="level_ratio_db", values="all_above_3", aggfunc="first")
+        v = v.reindex(index=ITDGS, columns=LEVELS).apply(lambda col: col.map(lambda b: "✓" if b is True else "·"))
+        v.index = [f"{i} ms" for i in v.index]; v.columns = [f"{c:+d} dB" if c else "0 dB" for c in v.columns]
+        L.append(f"\n**{seat}석** (행 = ITDG, 열 = 레벨비)\n\n" + md_table(v.reset_index().rename(columns={"index": "ITDG"}), 2))
     L.append("\n## 6. 데이터 품질")
     for k, v in q.items():
         if isinstance(v, (pd.DataFrame, pd.Series)) and len(v):

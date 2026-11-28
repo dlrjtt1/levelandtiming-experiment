@@ -25,6 +25,8 @@ Output per mode (lab = main data, online = secondary, analysed separately):
 | `fig_means_lab.png/.svg` | mean answers by seat × level ratio × ITDG |
 | `contrasts_lab_main.csv`, `contrasts_lab_all.csv` | contrasts after / before exclusions |
 | `lmm_lrt_lab_main.csv`, `lmm_lrt_lab_all.csv` | mixed-model likelihood-ratio tests |
+| `clmm_lrt_lab_main.csv`, `clmm_lrt_lab_all.csv` | the same tests in a cumulative link mixed model (ordinal answers) |
+| `valid_conditions_lab_main.csv` | per condition: Q1–Q3 means and lower 95 % CI bounds, and whether all three are above 3 |
 | `screening_lab.csv` | criteria A and B per participant |
 | `sessions_all.csv` | every session received, with the reason it was dropped (debug, test code, incomplete, repeat) |
 
@@ -44,6 +46,14 @@ Output per mode (lab = main data, online = secondary, analysed separately):
   - ITDG × level: exploratory
 - **Supporting model:** linear mixed model, answer ~ level × ITDG × seat (sum coding) + random intercept per listener,
   likelihood-ratio test per term. The answers are 5-point ordinal, so this is an approximation; the contrasts are primary.
+- **Sensitivity analysis (ordinal model):** the same terms in a cumulative link mixed model (logit link, random intercept per
+  listener, `analysis/clmm.py`), with a likelihood-ratio test per term. The report marks every term whose verdict at .05
+  differs from the linear mixed model. `clmm.py` was checked against R `ordinal::clmm` on simulated data: log-likelihood
+  within 0.002, same listener SD and likelihood ratios (`python analysis/check_clmm.py trials.csv sessions.csv q1`, needs R
+  with the `ordinal` package; not needed for the analysis itself).
+- **Conditions where all three ratings stay above the midpoint (exploratory, rule fixed 2026-11-28 before data):** for each
+  seat × ITDG × level ratio, the lower bound of the 95 % CI of the mean over listeners is above 3 for Q1, Q2 and Q3 (centre
+  seat: each listener's mean of the two repetitions). No multiplicity correction; a description, not a test.
 - **Data quality:** hidden-reference answers, `q1_hard` rate, centre-seat retest, Q1–Q3 separability, duration,
   listening time, comprehension-quiz attempts, post-questionnaire, Mac volume (lab).
 
