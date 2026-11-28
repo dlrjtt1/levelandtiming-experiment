@@ -20,7 +20,7 @@ T = {
            "<p>In this experiment, headphones recreate listening to a performance from a seat in a concert hall. On stage, a soprano sings with an orchestra, and the soprano's voice is reinforced through loudspeakers (PA) on both sides of the stage.</p><p>You will sit in three seats in the audience (left, centre, right) in turn and rate how the soprano's singing sounds.</p><p>The experiment takes about 30 minutes, with breaks.</p>"),
  "consent": ("<p><b>참여 동의</b></p><ul>"
              "<li><b>참여는 자유입니다.</b> 참여하지 않거나 도중에 그만두어도 불이익은 없습니다. 도쿄예술대학 학생의 성적 등에도 영향을 주지 않습니다.</li>"
-             "<li><b>참여할 수 있는 분:</b> 만 18세 이상이며, 청력에 자각하는 이상이 없는 분.</li>"
+             "<li><b>참여할 수 있는 분:</b> 만 18세 이상으로, 대학·대학원·전문학교 등에서 음악 또는 음향을 전공하고 있거나 전공한 분 가운데 청력에 자각하는 이상이 없는 분.</li>"
              "<li><b>부담과 배려:</b> 오래 들으면 피로할 수 있습니다. 음량은 처음에 작게 시작해 조금씩 올리며, 직접 '충분히 크지만 불편하지 않은' 크기로 맞춥니다. 불편하면 바로 그만두십시오.</li>"
              "<li><b>기록하는 정보:</b> 평가 응답, 듣는 데 걸린 시간, 헤드폰 기종, 음량 설정값, 브라우저 종류와 화면 크기, 마지막 질문의 응답(청력 이상의 자각 여부, 음악·음향 경력 연수 포함). 이름·연락처·IP 주소는 기록하지 않으며, 응답은 무작위 참가자 코드로만 관리합니다.</li>"
              "<li><b>데이터 취급:</b> 응답은 실시자가 관리하는 클라우드 표(Google 스프레드시트)에 저장되며 이 연구 목적으로만 사용합니다. 학교 규정에 따라 10년간 보관한 뒤 삭제합니다.</li>"
@@ -31,7 +31,7 @@ T = {
              "<p><b>문의처</b><br>{experimenter}<br>(연구 책임자: {pi})</p>",
              "<p><b>参加への同意</b></p><ul>"
              "<li><b>参加は自由です。</b>参加しなくても、途中でやめても、不利益を受けることは一切ありません。本学の学生の方の場合も、成績等には一切影響しません。</li>"
-             "<li><b>参加できる方：</b>18歳以上で、聴覚に自覚的な異常のない方。</li>"
+             "<li><b>参加できる方：</b>18歳以上で、大学・大学院・専門学校等で音楽または音響を専攻している方、または専攻したことのある方のうち、聴覚に自覚的な異常のない方。</li>"
              "<li><b>負担と配慮：</b>長時間の聴取により、疲れを感じることがあります。音量は最初に小さめから少しずつ上げ、ご自身で「十分に大きく、かつ不快ではない」大きさに合わせてください。不快に感じたら、すぐに中止してください。</li>"
              "<li><b>記録する情報：</b>評価の回答、聴取にかかった時間、ヘッドホンの機種、音量の設定値、ブラウザーの種類と画面サイズ、最後の質問への回答（聴覚の自覚的な異常の有無、音楽・音響の経験年数を含む）。氏名・連絡先・IPアドレスは記録しません。回答は、無作為に割り当てた参加者コードで管理します。</li>"
              "<li><b>データの扱い：</b>回答は実施者が管理するクラウド上の表（Googleスプレッドシート）に保存し、本研究の目的以外には使用しません。本学の規則に従い10年間保管したのち削除します。</li>"
@@ -42,7 +42,7 @@ T = {
              "<p><b>問い合わせ先</b><br>{experimenter}<br>（研究責任者：{pi}）</p>",
              "<p><b>Consent</b></p><ul>"
              "<li><b>Taking part is voluntary.</b> Not taking part, or stopping part-way, has no disadvantage for you, and does not affect the grades of Tokyo University of the Arts students.</li>"
-             "<li><b>Who can take part:</b> people aged 18 or over with no known hearing problem.</li>"
+             "<li><b>Who can take part:</b> people aged 18 or over who study or have studied music or audio at a university, graduate school or vocational school, and who have no known hearing problem.</li>"
              "<li><b>Burden and care:</b> long listening can be tiring. At the start you raise the volume gradually from low and set it yourself to a level that is clearly loud but not uncomfortable. Stop at once if anything feels uncomfortable.</li>"
              "<li><b>What is recorded:</b> your ratings, listening times, headphone model, volume setting, browser type and screen size, and your answers to the final questions (including whether you notice any hearing problem and your years of experience in music or audio). Your name, contact details and IP address are not recorded; answers are kept under a random participant code.</li>"
              "<li><b>Data handling:</b> answers are stored in a cloud table (Google Sheets) managed by the experimenter and used for this research only. They are kept for 10 years under university rules and then deleted.</li>"

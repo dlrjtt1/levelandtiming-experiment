@@ -9,7 +9,7 @@ window.P2_CONFIG = {
   ethics: {                 // shown on the consent screen; fill in before data collection (empty = "[TBD]" on screen)
     experimenter: "柳 東均 (You Dong-Gyun), Tokyo University of the Arts — s2525615@geidai.jp",       // the only contact address shown, e.g. "柳 東均（東京藝術大学 研究生） name@example.com"
     pi: "亀川 徹 (Toru Kamekawa)",                 // research supervisor (研究責任者): name and title only, no e-mail (questions go to the experimenter)
-    deadline: "2027-04-30",           // last day to withdraw consent, e.g. "2027年3月31日"
+    deadline: "2027-06-30",           // last day to withdraw consent, e.g. "2027年3月31日"
     approval: ""            // approval number of the ethics review
   },
   online: { audioBase: "audio/online", ext: "flac", endpoint: "https://script.google.com/macros/s/AKfycbyA2QLlFxH6rIjjSIFl89rZnOf2Kkgt1ZkCcAGCMq-FGih8lQt9WZvRI0fUfOQqVx1a/exec", assign: "https://script.google.com/macros/s/AKfycbyA2QLlFxH6rIjjSIFl89rZnOf2Kkgt1ZkCcAGCMq-FGih8lQt9WZvRI0fUfOQqVx1a/exec?assign=1&mode=online" },   // Google Apps Script web app (gas/Code.gs)
