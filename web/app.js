@@ -336,8 +336,13 @@
       const ok = await send(true);
       S.done = true; save();
       const code = String(S.session.pid || "").replace(/[<>&"]/g, "");
-      show(`<h1>${t("endH")}</h1><p class="${ok ? "" : "warn"}">${t(ok ? "endOk" : "endFail")}</p><p class="code">${t("endCode", { pid: code })}</p><div class="row"><button class="${ok ? "ghost" : ""}" id="dl">${t("download")}</button></div>`);
-      $("#dl").onclick = download;
+      const page = (ok) => {
+        show(`<h1>${t("endH")}</h1><p class="${ok ? "" : "warn"}">${t(ok ? "endOk" : "endFail")}</p><p class="code">${t("endCode", { pid: code })}</p>
+          <div class="row">${ok ? "" : `<button id="rs">${t("resend")}</button>`}<button class="ghost" id="dl">${t("download")}</button></div>`);
+        $("#dl").onclick = download;
+        if (!ok) $("#rs").onclick = async () => { $("#rs").disabled = true; page(await send(true)); };   // e.g. the Wi-Fi came back
+      };
+      page(ok);
     }
   };
   function run() {
@@ -370,7 +375,7 @@
   let saved = null; try { saved = JSON.parse(localStorage.getItem(KEY)); } catch (e) { saved = null; }
   if (saved && !saved.done && saved.session && saved.session.debug === DEBUG && saved.session.version === CFG.version) {
     await setLang(saved.session.lang);
-    show(`<p>${t("resumeQ")}</p><div class="row"><button id="y">${t("resumeYes")}</button><button class="ghost" id="n">${t("resumeNo")}</button></div>`);
+    show(`<div class="mid"><p>${t("resumeQ")}</p><div class="row"><button id="y">${t("resumeYes")}</button><button class="ghost" id="n">${t("resumeNo")}</button></div></div>`);
     $("#y").onclick = () => { S = saved; steps = build(); go(); };
     $("#n").onclick = () => { localStorage.removeItem(KEY); location.reload(); };
     return;

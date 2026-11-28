@@ -8,6 +8,7 @@
  "loading": "Loading sounds…",
  "loadError": "The sounds could not be loaded. Please check your connection and try again.",
  "retry": "Try again",
+ "resend": "Send the results again",
  "resumeQ": "An unfinished session was found. Continue where you left off?",
  "resumeYes": "Continue",
  "resumeNo": "Start over",
